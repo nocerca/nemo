@@ -1,0 +1,74 @@
+{
+  "success": true,
+  "data": {
+    "id": 999,
+    "services": [
+      {
+        "id": 331,
+        "first_cost": 9000,
+        "discount": 50,
+        "cost": 4500
+      },
+      {
+        "id": 333,
+        "first_cost": 2000,
+        "discount": 10,
+        "cost": 1800
+      }
+    ],
+    "client": {
+      "phone": "79169999900",
+      "name": "Дмитрий",
+      "surname": "",
+      "patronymic": "",
+      "email": "d@yclients.com"
+    },
+    "clients_count": 1,
+    "staff": {
+      "id": 8886,
+      "name": "Сергей",
+      "specialization": "Стилист",
+      "position": {
+        "id": 1,
+        "title": "Стилисты"
+      },
+      "avatar": "http://yclients.com/images/no-master-sm.png",
+      "avatar_big": "http://yclients.com/images/no-master.png",
+      "rating": 0,
+      "votes_count": 0
+    },
+    "datetime": "2019-01-05T15:35:06+0500",
+    "seance_length": 3600,
+    "create_date": "2019-01-05T15:35:06+0500",
+    "comment": "тестовая запись!",
+    "visit_attendance": 1,
+    "confirmed": 1,
+    "sms_before": 6,
+    "sms_now": 1,
+    "sms_now_text": "",
+    "email_now": 1,
+    "notified": 0,
+    "master_request": 1,
+    "api_id": "",
+    "from_url": "",
+    "review_requested": 0,
+    "activity_id": 0,
+    "documents": [
+      {
+        "id": 8172893,
+        "type_id": 7,
+        "storage_id": 0,
+        "user_id": 746310,
+        "company_id": 4564,
+        "number": 4163,
+        "comment": "",
+        "date_created": "2019-01-05 15:35:06",
+        "category_id": 0,
+        "visit_id": 3,
+        "record_id": 2,
+        "type_title": "Визит"
+      }
+    ]
+  },
+  "meta": []
+}

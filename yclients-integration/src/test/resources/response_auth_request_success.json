@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "data": {
+    "id": 12887761,
+    "user_token": "28f27276656851c90c3b32fcb8867f74",
+    "name": "Тестов Тест Тестович",
+    "phone": "79348435777",
+    "login": "79348435777",
+    "email": "sampleg@test.ru",
+    "avatar": "https://be.cdn.yclients.com/images/no-master.png",
+    "is_approved": true,
+    "is_email_confirmed": false,
+    "0": "28f27276656851c90c3b32fcb8867f74"
+  },
+  "meta": []
+}
