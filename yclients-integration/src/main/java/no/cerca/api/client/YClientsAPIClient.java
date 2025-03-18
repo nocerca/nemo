@@ -1,4 +1,4 @@
-package no.cerca.apiclient;
+package no.cerca.api.client;
 
 import no.cerca.dtos.basic.AuthDTO;
 import no.cerca.dtos.basic.RecordDTO;
