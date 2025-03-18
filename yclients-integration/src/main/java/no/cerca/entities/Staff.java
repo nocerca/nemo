@@ -12,6 +12,9 @@ public class Staff {
     @Id
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private Long serviceInnerId;
+
     @Column(nullable = false)
     private String name;
 
@@ -20,8 +23,9 @@ public class Staff {
     public Staff() {
     }
 
-    public Staff(Long id, String name, String specialization) {
+    public Staff(Long id, Long serviceInnerId, String name, String specialization) {
         this.id = id;
+        this.serviceInnerId = serviceInnerId;
         this.name = name;
         this.specialization = specialization;
     }
@@ -32,6 +36,14 @@ public class Staff {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getServiceInnerId() {
+        return serviceInnerId;
+    }
+
+    public void setServiceInnerId(Long serviceInnerId) {
+        this.serviceInnerId = serviceInnerId;
     }
 
     public String getName() {

@@ -16,6 +16,9 @@ public class Record {
     @Id
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private Long recordInnerId;
+
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
@@ -62,10 +65,9 @@ public class Record {
     public Record() {
     }
 
-    public Record(Long id, Company company, Staff staff, Client client, Set<Service> services,
-                  LocalDateTime date, Instant datetime, Instant createDate, int length,
-                  String comment, boolean deleted, boolean notifyBySms, boolean notifyByEmail) {
+    public Record(Long id, Long recordInnerId, Company company, Staff staff, Client client, Set<Service> services, LocalDateTime date, Instant datetime, Instant createDate, int length, String comment, boolean deleted, boolean notifyBySms, boolean notifyByEmail) {
         this.id = id;
+        this.recordInnerId = recordInnerId;
         this.company = company;
         this.staff = staff;
         this.client = client;
@@ -86,6 +88,14 @@ public class Record {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getRecordInnerId() {
+        return recordInnerId;
+    }
+
+    public void setRecordInnerId(Long recordInnerId) {
+        this.recordInnerId = recordInnerId;
     }
 
     public Company getCompany() {

@@ -10,6 +10,8 @@ import jakarta.persistence.*;
 public class Company {
 
     @Id
+    private Long companyInnerId;
+
     private Long id;
 
     @Column(nullable = false)
@@ -28,8 +30,8 @@ public class Company {
     public Company() {
     }
 
-    public Company(Long id, String title, String phone, String country, String site,
-                   boolean allowDeleteRecord, boolean allowChangeRecord) {
+    public Company(Long companyInnerId, Long id, String title, String phone, String country, String site, boolean allowDeleteRecord, boolean allowChangeRecord) {
+        this.companyInnerId = companyInnerId;
         this.id = id;
         this.title = title;
         this.phone = phone;
@@ -39,7 +41,14 @@ public class Company {
         this.allowChangeRecord = allowChangeRecord;
     }
 
-    // Getters and setters
+    public Long getCompanyInnerId() {
+        return companyInnerId;
+    }
+
+    public void setCompanyInnerId(Long companyInnerId) {
+        this.companyInnerId = companyInnerId;
+    }
+
     public Long getId() {
         return id;
     }

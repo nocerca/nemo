@@ -10,6 +10,8 @@ import jakarta.persistence.*;
 public class Client {
 
     @Id
+    private Long clientInnerId;
+
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -24,17 +26,25 @@ public class Client {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // Default constructor
     public Client() {
     }
 
-    public Client(Long id, String phone, String name, String surname, String patronymic, String email) {
+    public Client(Long clientInnerId, Long id, String phone, String name, String surname, String patronymic, String email) {
+        this.clientInnerId = clientInnerId;
         this.id = id;
         this.phone = phone;
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
         this.email = email;
+    }
+
+    public Long getClientInnerId() {
+        return clientInnerId;
+    }
+
+    public void setClientInnerId(Long clientInnerId) {
+        this.clientInnerId = clientInnerId;
     }
 
     public Long getId() {
