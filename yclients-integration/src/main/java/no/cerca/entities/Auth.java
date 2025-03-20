@@ -7,7 +7,7 @@ import no.cerca.dtos.basic.AuthDTO;
  * Created by jadae on 13.03.2025
  */
 @Entity
-@Table(name = "data")
+@Table(name = "auth")
 public class Auth {
 
     @Id
@@ -21,7 +21,11 @@ public class Auth {
 
     private String phone;
 
+    @Column(name = "login", nullable = false)
     private String login;
+
+    @Column(name = "password", nullable = false)
+    private String password;
 
     private String email;
 
@@ -31,17 +35,17 @@ public class Auth {
     public Auth() {
     }
 
-    public Auth(Long id, String userToken, String name, String phone, String login, String email, boolean isApproved) {
+    public Auth(Long id, String userToken, String name, String phone, String login, String password, String email, boolean isApproved) {
         this.id = id;
         this.userToken = userToken;
         this.name = name;
         this.phone = phone;
         this.login = login;
+        this.password = password;
         this.email = email;
         this.isApproved = isApproved;
     }
 
-    // Constructor for AuthDTO
     public Auth(AuthDTO authDTO) {
         this.userToken = authDTO.getUserToken();
         this.name = authDTO.getName();
@@ -51,7 +55,6 @@ public class Auth {
         this.isApproved = authDTO.isApproved();
     }
 
-    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -90,6 +93,14 @@ public class Auth {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
