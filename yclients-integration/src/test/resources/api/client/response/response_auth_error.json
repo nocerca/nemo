@@ -1,0 +1,7 @@
+{
+  "success": false,
+  "data": null,
+  "meta": {
+    "message": "Неверный логин или пароль"
+  }
+}
