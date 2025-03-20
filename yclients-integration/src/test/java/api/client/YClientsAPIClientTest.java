@@ -1,8 +1,12 @@
+package api.client;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import no.cerca.api.client.YClientsAPIClient;
+import no.cerca.api.exception.common.YClientsApiException;
+import no.cerca.api.exception.custom.DeleteRecordException;
 import no.cerca.dtos.basic.ClientDTO;
 import no.cerca.dtos.basic.RecordDTO;
 import no.cerca.dtos.basic.ServiceDTO;
@@ -49,12 +53,11 @@ public class YClientsAPIClientTest {
     @Test
     @DisplayName("Успешное получение ответа на авторизацию")
     public void successAuth() throws IOException {
-        String endpoint = "/auth";
         RequestAuthDTO requestBody = new RequestAuthDTO("username", "password");
         String partnerToken = "testPartnerToken";
 
         ResponseDTO<AuthDTO> apiResponse = getResponseFromFile(
-                "response_auth_request_success.json",
+                "api/client/response/response_auth_success.json",
                 new TypeReference<ResponseDTO<AuthDTO>>() {}
         );
 
@@ -72,7 +75,7 @@ public class YClientsAPIClientTest {
                 eq(new ParameterizedTypeReference<ResponseDTO<AuthDTO>>() {})
         )).thenReturn(new ResponseEntity<>(apiResponse, HttpStatus.OK));
 
-        ResponseDTO<AuthDTO> response = yClientsAPIClient.auth(endpoint, requestBody, partnerToken);
+        ResponseDTO<AuthDTO> response = yClientsAPIClient.auth(requestBody, partnerToken);
 
         assertTrue(response.isSuccess());
         assertNotNull(response.getData());
@@ -83,6 +86,39 @@ public class YClientsAPIClientTest {
         assertEquals("https://be.cdn.yclients.com/images/no-master.png", response.getData().getAvatar());
         assertEquals("79348435777", response.getData().getLogin());
         assertEquals(12887761L, response.getData().getId());
+    }
+
+    @Test
+    @DisplayName("Ошибка при получении ответа на авторизацию")
+    public void errorAuth() throws IOException {
+        RequestAuthDTO requestBody = new RequestAuthDTO("username", "password");
+        String partnerToken = "testPartnerToken";
+
+        ResponseDTO<AuthDTO> apiResponse = getResponseFromFile(
+                "api/client/response/response_auth_error.json",
+                new TypeReference<ResponseDTO<AuthDTO>>() {}
+        );
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        headers.add("Accept", "application/vnd.yclients.v2+json");
+        headers.add("Authorization", "Bearer " + partnerToken);
+
+        HttpEntity<RequestAuthDTO> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        when(restTemplate.exchange(
+                eq("https://api.yclients.com/api/v1/auth"),
+                eq(HttpMethod.POST),
+                eq(requestEntity),
+                eq(new ParameterizedTypeReference<ResponseDTO<AuthDTO>>() {})
+        )).thenReturn(new ResponseEntity<>(apiResponse, HttpStatus.OK));
+
+
+        YClientsApiException exception = assertThrows(YClientsApiException.class, () -> {
+            yClientsAPIClient.auth(requestBody, partnerToken);
+        });
+
+        assertEquals("Неверный логин или пароль", exception.getErrorMessage());
     }
 
     @Test
@@ -100,7 +136,7 @@ public class YClientsAPIClientTest {
         int count = 50;
 
         ResponseDTO<List<RecordDTO>> apiResponse = getResponseFromFile(
-                "response_get_records_success.json",
+                "api/client/response/response_get_records_success.json",
                 new TypeReference<ResponseDTO<List<RecordDTO>>>() {}
         );
 
@@ -150,7 +186,7 @@ public class YClientsAPIClientTest {
         Long recordId = 456L;
         String userToken = "testToken";
 
-        ResponseDTO<RecordDTO> apiResponse = getResponseFromFile("response_get_record_success.json", new TypeReference<ResponseDTO<RecordDTO>>() {});
+        ResponseDTO<RecordDTO> apiResponse = getResponseFromFile("api/client/response/response_get_record_success.json", new TypeReference<ResponseDTO<RecordDTO>>() {});
 
         when(restTemplate.exchange(
                 eq("https://api.yclients.com/api/v1/record/123/456"),
@@ -210,7 +246,7 @@ public class YClientsAPIClientTest {
         );
         String userToken = "testToken";
 
-        ResponseDTO<List<RecordDTO>> apiResponse = getResponseFromFile("response_create_record_success.json", new TypeReference<ResponseDTO<List<RecordDTO>>>() {});
+        ResponseDTO<List<RecordDTO>> apiResponse = getResponseFromFile("api/client/response/response_create_record_success.json", new TypeReference<ResponseDTO<List<RecordDTO>>>() {});
 
         when(restTemplate.exchange(
                 eq("https://api.yclients.com/api/v1/records/123"),
@@ -245,7 +281,7 @@ public class YClientsAPIClientTest {
         RequestUpdateDTO requestUpdateDTO = new RequestUpdateDTO();
 
         ResponseDTO<RecordDTO> expectedResponse = getResponseFromFile(
-                "response_update_record_success.json",
+                "api/client/response/response_update_record_success.json",
                 new TypeReference<ResponseDTO<RecordDTO>>() {}
         );
 
@@ -282,12 +318,18 @@ public class YClientsAPIClientTest {
                 eq(url),
                 eq(HttpMethod.DELETE),
                 any(HttpEntity.class),
-                eq(Void.class)
+                eq(new ParameterizedTypeReference<Void>() {})
         )).thenReturn(response);
 
         yClientsAPIClient.deleteRecord(companyId, recordId, partnerToken);
 
-        verify(restTemplate, times(1)).exchange(eq(url), eq(HttpMethod.DELETE), any(HttpEntity.class), eq(Void.class));
+        verify(restTemplate, times(1)).exchange(
+                eq(url),
+                eq(HttpMethod.DELETE),
+                any(HttpEntity.class),
+                eq(new ParameterizedTypeReference<Void>() {})
+        );
+
     }
 
     @Test
@@ -307,13 +349,13 @@ public class YClientsAPIClientTest {
                 eq(url),
                 eq(HttpMethod.DELETE),
                 any(HttpEntity.class),
-                eq(Void.class)
+                eq(new ParameterizedTypeReference<Void>() {})
         )).thenReturn(response);
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        DeleteRecordException exception = assertThrows(DeleteRecordException.class, () -> {
             yClientsAPIClient.deleteRecord(companyId, recordId, partnerToken);
         });
 
-        assertEquals("Failed to delete record. Status: 500 INTERNAL_SERVER_ERROR", exception.getMessage());
+        assertEquals("Failed to delete record. Status: 500 INTERNAL_SERVER_ERROR", exception.getErrorMessage());
     }
 }
