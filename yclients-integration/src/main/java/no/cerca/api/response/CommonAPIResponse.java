@@ -7,10 +7,12 @@ public class CommonAPIResponse<T> {
 
     private String status;
     private T data;
+    private String message;
 
-    public CommonAPIResponse(String status, T data) {
+    public CommonAPIResponse(String status, T data, String message) {
         this.status = status;
         this.data = data;
+        this.message = message;
     }
 
     public String getStatus() {
@@ -27,5 +29,13 @@ public class CommonAPIResponse<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
