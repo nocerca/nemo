@@ -22,4 +22,8 @@ public class AuthService {
     public Auth save(Auth auth){
         return authRepository.save(auth);
     }
+
+    public Optional<Auth> get(Long authId) {
+        return authRepository.findById(authId);
+    }
 }
