@@ -1,6 +1,7 @@
 package no.cerca.entities;
 
 import jakarta.persistence.*;
+import no.cerca.dtos.basic.StaffDTO;
 
 /**
  * Created by jadae on 12.03.2025
@@ -28,6 +29,12 @@ public class Staff {
         this.serviceInnerId = serviceInnerId;
         this.name = name;
         this.specialization = specialization;
+    }
+
+    public Staff(StaffDTO dto) {
+        this.id = dto.getId();
+        this.name = dto.getName();
+        this.specialization = dto.getSpecialization();
     }
 
     public Long getId() {
