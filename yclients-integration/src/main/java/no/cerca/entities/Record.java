@@ -1,6 +1,8 @@
 package no.cerca.entities;
 
 import jakarta.persistence.*;
+import no.cerca.dtos.basic.RecordDTO;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -62,6 +64,8 @@ public class Record {
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean notifyByEmail;
 
+    private LocalDateTime updated;
+
     public Record() {
     }
 
@@ -80,6 +84,21 @@ public class Record {
         this.deleted = deleted;
         this.notifyBySms = notifyBySms;
         this.notifyByEmail = notifyByEmail;
+        this.updated = LocalDateTime.now();
+    }
+
+    public Record(RecordDTO dto, Company company, Staff staff, Client client, Set<Service> services) {
+        this.id = dto.getId();
+        this.company = company;
+        this.staff = staff;
+        this.client = client;
+        this.services = services;
+        this.date = LocalDateTime.parse(dto.getDate());
+        this.datetime = dto.getDatetime().toInstant();
+        this.createDate = dto.getCreateDate().toInstant();
+        this.comment = dto.getComment();
+        this.length = dto.getLength();
+        this.deleted = dto.isDeleted();
     }
 
     public Long getId() {
@@ -192,5 +211,9 @@ public class Record {
 
     public void setNotifyByEmail(boolean notifyByEmail) {
         this.notifyByEmail = notifyByEmail;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
     }
 }

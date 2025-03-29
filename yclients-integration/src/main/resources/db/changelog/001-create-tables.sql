@@ -45,6 +45,7 @@ CREATE TABLE record (
                         length INT NOT NULL,
                         comment TEXT,
                         deleted BOOLEAN NOT NULL DEFAULT FALSE,
+                        updated TIMESTAMP,
                         FOREIGN KEY (companyInnerId) REFERENCES company(companyInnerId),
                         FOREIGN KEY (staffInnerId) REFERENCES staff(staffInnerId),
                         FOREIGN KEY (clientInnerId) REFERENCES client(clientInnerId)
