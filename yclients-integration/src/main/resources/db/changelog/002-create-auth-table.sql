@@ -7,5 +7,7 @@ CREATE TABLE auth (
                       email VARCHAR(255),
                       password VARCHAR(255) NOT NULL,
                       avatar VARCHAR(255),
-                      is_approved BOOLEAN NOT NULL
+                      is_approved BOOLEAN NOT NULL,
+                      company_id BIGINT,
+                      partner_token VARCHAR(255)
 );

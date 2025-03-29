@@ -32,10 +32,16 @@ public class Auth {
     @Column(name = "is_approved", nullable = false)
     private boolean isApproved;
 
+    @Column(name = "company_id")
+    private Long companyId;
+
+    @Column(name = "partner_token")
+    private String partnerToken;
+
     public Auth() {
     }
 
-    public Auth(Long id, String userToken, String name, String phone, String login, String password, String email, boolean isApproved) {
+    public Auth(Long id, String userToken, String name, String phone, String login, String password, String email, boolean isApproved, Long companyId, String partnerToken) {
         this.id = id;
         this.userToken = userToken;
         this.name = name;
@@ -44,6 +50,8 @@ public class Auth {
         this.password = password;
         this.email = email;
         this.isApproved = isApproved;
+        this.companyId = companyId;
+        this.partnerToken = partnerToken;
     }
 
     public Auth(AuthDTO authDTO) {
@@ -117,5 +125,21 @@ public class Auth {
 
     public void setApproved(boolean approved) {
         isApproved = approved;
+    }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
+    }
+
+    public String getPartnerToken() {
+        return partnerToken;
+    }
+
+    public void setPartnerToken(String partnerToken) {
+        this.partnerToken = partnerToken;
     }
 }
