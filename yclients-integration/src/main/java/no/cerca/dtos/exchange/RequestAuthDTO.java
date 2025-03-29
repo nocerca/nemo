@@ -14,9 +14,12 @@ public class RequestAuthDTO {
     @NotNull
     private String password;
 
-    public RequestAuthDTO(String login, String password) {
+    private String partnerToken;
+
+    public RequestAuthDTO(String login, String password, String partnerToken) {
         this.login = login;
         this.password = password;
+        this.partnerToken = partnerToken;
     }
 
     public RequestAuthDTO() {
@@ -36,5 +39,13 @@ public class RequestAuthDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPartnerToken() {
+        return partnerToken;
+    }
+
+    public void setPartnerToken(String partnerToken) {
+        this.partnerToken = partnerToken;
     }
 }
