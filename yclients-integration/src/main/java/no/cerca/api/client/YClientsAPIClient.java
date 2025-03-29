@@ -40,90 +40,100 @@ public class YClientsAPIClient {
         return headers;
     }
 
-    public ResponseDTO<AuthDTO> auth(RequestAuthDTO requestBody, String partnerToken) {
-        String url = BASE_URL + "/auth";
-        HttpHeaders headers = createHeaders(partnerToken);
-
-        HttpEntity<Object> request = new HttpEntity<>(requestBody, headers);
-        ParameterizedTypeReference<ResponseDTO<AuthDTO>> responseRef = new ParameterizedTypeReference<ResponseDTO<AuthDTO>>() {};
-
-        ResponseEntity<ResponseDTO<AuthDTO>> response = executeRequest(url, HttpMethod.POST, request, responseRef);
-
-        return response.getBody();
+    public ResponseDTO<AuthDTO> auth(RequestAuthDTO requestBody) {
+        return executeRequest(
+                BASE_URL + "/auth",
+                HttpMethod.POST,
+                new HttpEntity<>(requestBody, createHeaders(requestBody.getPartnerToken())),
+                new ParameterizedTypeReference<ResponseDTO<AuthDTO>>() {}
+        ).getBody();
     }
 
     public ResponseDTO<List<RecordDTO>> getRecords(Long companyId, RequestRecordsDTO requestDTO, String userToken) {
-        String url = BASE_URL + "/records/" + companyId;
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUri(URI.create(url));
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder
+                .fromUriString(BASE_URL + "/records/" + companyId)
+                .queryParamIfPresent("staff_id", Optional.ofNullable(requestDTO.getStaffId()))
+                .queryParamIfPresent("client_id", Optional.ofNullable(requestDTO.getClientId()))
+                .queryParamIfPresent("start_date", Optional.ofNullable(requestDTO.getStartDate()))
+                .queryParamIfPresent("end_date", Optional.ofNullable(requestDTO.getEndDate()))
+                .queryParamIfPresent("c_start_date", Optional.ofNullable(requestDTO.getcStartDate()))
+                .queryParamIfPresent("c_end_date", Optional.ofNullable(requestDTO.getcEndDate()))
+                .queryParamIfPresent("page", Optional.ofNullable(requestDTO.getPage()))
+                .queryParamIfPresent("count", Optional.ofNullable(requestDTO.getCount()));
 
-        if (requestDTO.getStaffId() != null) uriBuilder.queryParam("staff_id", requestDTO.getStaffId());
-        if (requestDTO.getClientId() != null) uriBuilder.queryParam("client_id", requestDTO.getClientId());
-        if (requestDTO.getStartDate() != null) uriBuilder.queryParam("start_date", requestDTO.getStartDate());
-        if (requestDTO.getEndDate() != null) uriBuilder.queryParam("end_date", requestDTO.getEndDate());
-        if (requestDTO.getcStartDate() != null) uriBuilder.queryParam("c_start_date", requestDTO.getcStartDate());
-        if (requestDTO.getcEndDate() != null) uriBuilder.queryParam("c_end_date", requestDTO.getcEndDate());
-        if (requestDTO.getPage() != null) uriBuilder.queryParam("page", requestDTO.getPage());
-        if (requestDTO.getCount() != null) uriBuilder.queryParam("count", requestDTO.getCount());
-
-        HttpHeaders headers = createHeaders(userToken);
-        HttpEntity<Void> request = new HttpEntity<>(headers);
-        ParameterizedTypeReference<ResponseDTO<List<RecordDTO>>> responseRef = new ParameterizedTypeReference<ResponseDTO<List<RecordDTO>>>() {};
-
-        ResponseEntity<ResponseDTO<List<RecordDTO>>> response = executeRequest(uriBuilder.toUriString(), HttpMethod.GET, request, responseRef);
-
-        return response.getBody();
+        return executeRequest(
+                uriBuilder.toUriString(),
+                HttpMethod.GET,
+                new HttpEntity<>(createHeaders(userToken)),
+                new ParameterizedTypeReference<ResponseDTO<List<RecordDTO>>>() {}
+        ).getBody();
     }
 
     public ResponseDTO<RecordDTO> getRecord(Long companyId, Long recordId, String userToken) {
-        String url = BASE_URL + "/record/" + companyId + "/" + recordId;
-        HttpHeaders headers = createHeaders(userToken);
-
-        HttpEntity<Void> request = new HttpEntity<>(headers);
-        ParameterizedTypeReference<ResponseDTO<RecordDTO>> responseRef = new ParameterizedTypeReference<ResponseDTO<RecordDTO>>() {};
-
-        ResponseEntity<ResponseDTO<RecordDTO>> response = executeRequest(url, HttpMethod.GET, request, responseRef);
-
-        return response.getBody();
+        return executeRequest(
+                BASE_URL + "/record/" + companyId + "/" + recordId,
+                HttpMethod.GET,
+                new HttpEntity<>(createHeaders(userToken)),
+                new ParameterizedTypeReference<ResponseDTO<RecordDTO>>() {}
+        ).getBody();
     }
 
     public ResponseDTO<List<RecordDTO>> createRecord(Long companyId, RequestCreateDTO request, String userToken) {
-        String url = BASE_URL + "/records/" + companyId;
-
-        HttpHeaders headers = createHeaders(userToken);
-        HttpEntity<RequestCreateDTO> httpEntity = new HttpEntity<>(request, headers);
-        ParameterizedTypeReference<ResponseDTO<List<RecordDTO>>> responseRef = new ParameterizedTypeReference<>() {};
-
-        ResponseEntity<ResponseDTO<List<RecordDTO>>> response = executeRequest(url, HttpMethod.POST, httpEntity, responseRef);
-
-        return response.getBody();
+        return executeRequest(
+                BASE_URL + "/records/" + companyId,
+                HttpMethod.POST,
+                new HttpEntity<>(request, createHeaders(userToken)),
+                new ParameterizedTypeReference<ResponseDTO<List<RecordDTO>>>() {}
+        ).getBody();
     }
 
     public ResponseDTO<RecordDTO> updateRecord(Long companyId, Long recordId, RequestUpdateDTO recordUpdateRequest, String userToken) {
-        String url = BASE_URL + "/record/" + companyId + "/" + recordId;
+        return executeRequest(
+                BASE_URL + "/record/" + companyId + "/" + recordId,
+                HttpMethod.PUT,
+                new HttpEntity<>(recordUpdateRequest, createHeaders(userToken)),
+                new ParameterizedTypeReference<ResponseDTO<RecordDTO>>() {}
+        ).getBody();
+    }
+
+    public void deleteRecord(Long companyId, Long recordId, String partnerToken) {
+        ResponseEntity<Void> response = executeRequest(
+                BASE_URL + "/record/" + companyId + "/" + recordId,
+                HttpMethod.DELETE,
+                new HttpEntity<>(createHeaders(partnerToken)),
+                new ParameterizedTypeReference<Void>() {}
+        );
+
+        if (!response.getStatusCode().equals(HttpStatus.NO_CONTENT)) {
+            //logger
+            throw new DeleteRecordException(response.getStatusCode(), "Не удалось удалить запись: " + response.getStatusCode());
+        }
+    }
+
+    public ResponseDTO<Void> sendCustomSms(Long companyId, RequestMessageDTO request, String userToken) {
+        String url = BASE_URL + "/sms/clients/by_id/" + companyId;
+
         HttpHeaders headers = createHeaders(userToken);
+        HttpEntity<RequestMessageDTO> httpEntity = new HttpEntity<>(request, headers);
 
-        HttpEntity<RequestUpdateDTO> request = new HttpEntity<>(recordUpdateRequest, headers);
-        ParameterizedTypeReference<ResponseDTO<RecordDTO>> responseRef = new ParameterizedTypeReference<ResponseDTO<RecordDTO>>() {};
-
-        ResponseEntity<ResponseDTO<RecordDTO>> response = executeRequest(url, HttpMethod.PUT, request, responseRef);
+        ParameterizedTypeReference<ResponseDTO<Void>> responseRef = new ParameterizedTypeReference<>() {};
+        ResponseEntity<ResponseDTO<Void>> response = executeRequest(url, HttpMethod.POST, httpEntity, responseRef);
 
         return response.getBody();
     }
 
-    public void deleteRecord(Long companyId, Long recordId, String partnerToken) {
-        String url = BASE_URL + "/record/" + companyId + "/" + recordId;
-        HttpHeaders headers = createHeaders(partnerToken);
+    public ResponseDTO<Void> sendCustomEmail(Long companyId, RequestMessageDTO request, String userToken) {
+        String url = BASE_URL + "/email/clients/by_id/" + companyId;
 
-        HttpEntity<String> request = new HttpEntity<>(headers);
-        ParameterizedTypeReference<Void> responseRef = new ParameterizedTypeReference<Void>() {};
+        HttpHeaders headers = createHeaders(userToken);
+        HttpEntity<RequestMessageDTO> httpEntity = new HttpEntity<>(request, headers);
 
-        ResponseEntity<Void> response = executeRequest(url, HttpMethod.DELETE, request, responseRef);
+        ParameterizedTypeReference<ResponseDTO<Void>> responseRef = new ParameterizedTypeReference<>() {};
+        ResponseEntity<ResponseDTO<Void>> response = executeRequest(url, HttpMethod.POST, httpEntity, responseRef);
 
-        if (response.getStatusCode() != HttpStatus.NO_CONTENT) {
-            //logger
-            throw new DeleteRecordException(response.getStatusCode(), "Failed to delete record. Status: " + response.getStatusCode());
-        }
+        return response.getBody();
     }
+
 
     private <T> ResponseEntity<T> executeRequest(String url, HttpMethod method, HttpEntity<?> request, ParameterizedTypeReference<T> responseType) {
         ResponseEntity<T> response = restTemplate.exchange(url, method, request, responseType);
