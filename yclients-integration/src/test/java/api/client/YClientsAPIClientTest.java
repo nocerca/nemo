@@ -53,8 +53,7 @@ public class YClientsAPIClientTest {
     @Test
     @DisplayName("Успешное получение ответа на авторизацию")
     public void successAuth() throws IOException {
-        RequestAuthDTO requestBody = new RequestAuthDTO("username", "password");
-        String partnerToken = "testPartnerToken";
+        RequestAuthDTO requestBody = new RequestAuthDTO("username", "password", "testPartnerToken");
 
         ResponseDTO<AuthDTO> apiResponse = getResponseFromFile(
                 "api/client/response/response_auth_success.json",
@@ -64,7 +63,7 @@ public class YClientsAPIClientTest {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         headers.add("Accept", "application/vnd.yclients.v2+json");
-        headers.add("Authorization", "Bearer " + partnerToken);
+        headers.add("Authorization", "Bearer " + requestBody.getPartnerToken());
 
         HttpEntity<RequestAuthDTO> requestEntity = new HttpEntity<>(requestBody, headers);
 
@@ -75,7 +74,7 @@ public class YClientsAPIClientTest {
                 eq(new ParameterizedTypeReference<ResponseDTO<AuthDTO>>() {})
         )).thenReturn(new ResponseEntity<>(apiResponse, HttpStatus.OK));
 
-        ResponseDTO<AuthDTO> response = yClientsAPIClient.auth(requestBody, partnerToken);
+        ResponseDTO<AuthDTO> response = yClientsAPIClient.auth(requestBody);
 
         assertTrue(response.isSuccess());
         assertNotNull(response.getData());
@@ -91,8 +90,7 @@ public class YClientsAPIClientTest {
     @Test
     @DisplayName("Ошибка при получении ответа на авторизацию")
     public void errorAuth() throws IOException {
-        RequestAuthDTO requestBody = new RequestAuthDTO("username", "password");
-        String partnerToken = "testPartnerToken";
+        RequestAuthDTO requestBody = new RequestAuthDTO("username", "password", "testPartnerToken");
 
         ResponseDTO<AuthDTO> apiResponse = getResponseFromFile(
                 "api/client/response/response_auth_error.json",
@@ -102,7 +100,7 @@ public class YClientsAPIClientTest {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         headers.add("Accept", "application/vnd.yclients.v2+json");
-        headers.add("Authorization", "Bearer " + partnerToken);
+        headers.add("Authorization", "Bearer " + requestBody.getPartnerToken());
 
         HttpEntity<RequestAuthDTO> requestEntity = new HttpEntity<>(requestBody, headers);
 
@@ -115,7 +113,7 @@ public class YClientsAPIClientTest {
 
 
         YClientsApiException exception = assertThrows(YClientsApiException.class, () -> {
-            yClientsAPIClient.auth(requestBody, partnerToken);
+            yClientsAPIClient.auth(requestBody);
         });
 
         assertEquals("Неверный логин или пароль", exception.getErrorMessage());
@@ -356,6 +354,6 @@ public class YClientsAPIClientTest {
             yClientsAPIClient.deleteRecord(companyId, recordId, partnerToken);
         });
 
-        assertEquals("Failed to delete record. Status: 500 INTERNAL_SERVER_ERROR", exception.getErrorMessage());
+        assertEquals("Не удалось удалить запись: 500 INTERNAL_SERVER_ERROR", exception.getErrorMessage());
     }
 }
