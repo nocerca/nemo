@@ -1,6 +1,7 @@
 package no.cerca.entities;
 
 import jakarta.persistence.*;
+import no.cerca.dtos.basic.ServiceDTO;
 
 /**
  * Created by jadae on 05.03.2025
@@ -25,6 +26,11 @@ public class Service {
         this.id = id;
         this.serviceInnerId = serviceInnerId;
         this.title = title;
+    }
+
+    public Service(ServiceDTO dto) {
+        this.id = dto.getId();
+        this.title = dto.getTitle();
     }
 
     public Long getId() {
