@@ -1,6 +1,7 @@
 package no.cerca.entities;
 
 import jakarta.persistence.*;
+import no.cerca.dtos.basic.ClientDTO;
 
 /**
  * Created by jadae on 05.03.2025
@@ -37,6 +38,15 @@ public class Client {
         this.surname = surname;
         this.patronymic = patronymic;
         this.email = email;
+    }
+
+    public Client(ClientDTO dto) {
+        this.id = dto.getId();
+        this.phone = dto.getPhone();
+        this.name = dto.getName();
+        this.surname = dto.getSurname();
+        this.patronymic = dto.getPatronymic();
+        this.email = dto.getEmail();
     }
 
     public Long getClientInnerId() {
