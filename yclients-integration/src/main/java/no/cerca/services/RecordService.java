@@ -1,13 +1,21 @@
 package no.cerca.services;
 
+import jakarta.persistence.EntityNotFoundException;
+import no.cerca.dtos.basic.RecordDTO;
+import no.cerca.entities.Client;
+import no.cerca.entities.Company;
 import no.cerca.entities.Record;
-import no.cerca.repositories.RecordRepository;
+import no.cerca.entities.Staff;
+import no.cerca.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by jadae on 12.03.2025
@@ -16,6 +24,18 @@ import java.util.Optional;
 public class RecordService {
     @Autowired
     private RecordRepository recordRepository;
+
+    @Autowired
+    private ServiceRepository serviceRepository;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private CompanyRepository companyRepository;
+
+    @Autowired
+    private StaffRepository staffRepository;
 
     public List<Record> getAllRecordsForClient(Long clientId) {
         return recordRepository.findByClientId(clientId);
@@ -54,4 +74,42 @@ public class RecordService {
         });
 
     }
+
+    public Boolean wasUpdatedLessThan15minAgo(Long clientId) {
+        List<Record> records = recordRepository.getRecordsByClientIdAndUpdatedAfter(clientId, LocalDateTime.now().minusMinutes(15));
+        return !records.isEmpty();
+    }
+
+    public Record createOrUpdateRecordFromDTO(RecordDTO dto) {
+        Company company = companyRepository.findById(dto.getCompanyId())
+                .orElseThrow(() -> new EntityNotFoundException("Company not found"));
+
+        Staff staff = staffRepository.findById(dto.getStaff().getId())
+                .orElseGet(() -> new Staff(dto.getStaff()));
+
+        Client client = clientRepository.findById(dto.getClient().getId())
+                .orElseGet(() -> new Client(dto.getClient()));
+
+        Set<no.cerca.entities.Service> services = dto.getServices().stream()
+                .map(serviceDto -> serviceRepository.findById(serviceDto.getId())
+                        .orElseGet(() -> new no.cerca.entities.Service(serviceDto)))
+                .collect(Collectors.toSet());
+
+        return recordRepository.findById(dto.getId())
+                .map(existingRecord -> {
+                    // Обновляем только изменившиеся поля
+                    existingRecord.setCompany(company);
+                    existingRecord.setStaff(staff);
+                    existingRecord.setClient(client);
+                    existingRecord.setServices(services);
+                    existingRecord.setDatetime(dto.getDatetime().toInstant());
+                    existingRecord.setCreateDate(dto.getCreateDate().toInstant());
+                    existingRecord.setComment(dto.getComment());
+                    existingRecord.setLength(dto.getLength());
+                    existingRecord.setDeleted(dto.isDeleted());
+                    return existingRecord;
+                })
+                .orElseGet(() -> new Record(dto, company, staff, client, services));
+    }
+
 }
