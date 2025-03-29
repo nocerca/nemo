@@ -22,8 +22,28 @@ public class RecordService {
     }
 
     public List<Record> getRecordsForNextHour(Long clientId) {
-        LocalDateTime now = LocalDateTime.now();
-        return recordRepository.findByClientIdAndDatetimeBetween(clientId, now, now.plusHours(1));
+        Instant start = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
+        Instant end = start.plus(1, ChronoUnit.HOURS);
+        return recordRepository.findByClientIdAndDatetimeBetween(clientId, start, end);
+    }
+
+    public Record getCurrentRecord(Long clientId) {
+        Instant start = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().minus(10, ChronoUnit.MINUTES);
+        Instant end = start.plus(10, ChronoUnit.SECONDS);
+        return recordRepository.findFirstByClientIdAndDatetimeBeforeAndEndTimeAfterOrderByDatetimeAsc(clientId, start, end).orElse(null);
+    }
+
+    public Record getNextRecord(Long clientId) {
+        Instant now = Instant.now();
+        return recordRepository.findFirstByClientIdAndDatetimeAfterOrderByDatetimeAsc(clientId, now).orElse(null);
+    }
+
+    public List<Record> getRecordsForToday(Long clientId) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        Instant startOfDay = LocalDate.now().atStartOfDay(zoneId).toInstant();
+        Instant endOfDay = LocalDate.now().atTime(LocalTime.MAX).atZone(zoneId).toInstant();
+
+        return recordRepository.findByClientIdAndDatetimeBetween(clientId, startOfDay, endOfDay);
     }
 
     public void updateRecordStatus(Long recordId, boolean deleted) {
