@@ -11,34 +11,46 @@ import no.cerca.dtos.basic.ServiceDTO;
 public class Service {
 
     @Id
-    private Long id;
-
-    @Column(nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "service_inner_id", nullable = false, unique = true)
     private Long serviceInnerId;
 
-    @Column(nullable = false)
+    @Column(name = "id", nullable = false, unique = true)
+    private Long externalServiceId;
+
+    @Column(name = "title", nullable = false)
     private String title;
+
+    @Column(name = "weight")
+    private Integer weight;
+
+    @Column(name = "seance_length")
+    private Integer seanceLength;
 
     public Service() {
     }
 
     public Service(Long id, Long serviceInnerId, String title) {
-        this.id = id;
+        this.externalServiceId = id;
         this.serviceInnerId = serviceInnerId;
         this.title = title;
+        this.weight = 1;
+        this.seanceLength = 30;
     }
 
     public Service(ServiceDTO dto) {
-        this.id = dto.getId();
+        this.externalServiceId = dto.getId();
         this.title = dto.getTitle();
+        this.weight = 1;
+        this.seanceLength = 30;
     }
 
-    public Long getId() {
-        return id;
+    public Long getExternalServiceId() {
+        return externalServiceId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setExternalServiceId(Long id) {
+        this.externalServiceId = id;
     }
 
     public Long getServiceInnerId() {
@@ -55,5 +67,21 @@ public class Service {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public Integer getSeanceLength() {
+        return seanceLength;
+    }
+
+    public void setSeanceLength(Integer seanceLength) {
+        this.seanceLength = seanceLength;
     }
 }

@@ -10,29 +10,36 @@ import jakarta.persistence.*;
 public class Company {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "company_inner_id")
     private Long companyInnerId;
 
-    private Long id;
+    @Column(name = "id")
+    private Long companyExternalId;
 
-    @Column(nullable = false)
+    @Column(name="title", nullable = false)
     private String title;
 
+    @Column(name="phone", nullable = false)
     private String phone;
+
+    @Column(name="country", nullable = false)
     private String country;
+
+    @Column(name = "site")
     private String site;
 
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    @Column(name = "allow_delete_record", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean allowDeleteRecord;
 
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    @Column(name = "allow_change_record", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean allowChangeRecord;
 
     public Company() {
     }
 
-    public Company(Long companyInnerId, Long id, String title, String phone, String country, String site, boolean allowDeleteRecord, boolean allowChangeRecord) {
-        this.companyInnerId = companyInnerId;
-        this.id = id;
+    public Company(Long id, String title, String phone, String country, String site, boolean allowDeleteRecord, boolean allowChangeRecord) {
+        this.companyExternalId = id;
         this.title = title;
         this.phone = phone;
         this.country = country;
@@ -41,20 +48,20 @@ public class Company {
         this.allowChangeRecord = allowChangeRecord;
     }
 
-    public Long getCompanyInnerId() {
-        return companyInnerId;
-    }
-
     public void setCompanyInnerId(Long companyInnerId) {
         this.companyInnerId = companyInnerId;
     }
 
-    public Long getId() {
-        return id;
+    public Long getCompanyInnerId() {
+        return companyInnerId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getCompanyExternalId() {
+        return companyExternalId;
+    }
+
+    public void setCompanyExternalId(Long id) {
+        this.companyExternalId = id;
     }
 
     public String getTitle() {

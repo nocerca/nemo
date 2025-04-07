@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import no.cerca.dtos.basic.RecordDTO;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,62 +17,66 @@ import java.util.Set;
 public class Record {
 
     @Id
-    private Long id;
-
-    @Column(nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "record_inner_id")
     private Long recordInnerId;
 
+    @Column(name = "id", nullable = false, unique = true)
+    private Long recordExternalId;
+
     @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
+    @JoinColumn(name = "company_id", referencedColumnName = "id", nullable = false)
     private Company company;
 
     @ManyToOne
-    @JoinColumn(name = "staff_id", nullable = false)
+    @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = false)
     private Staff staff;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
     private Client client;
 
     @ManyToMany
     @JoinTable(
             name = "record_service",
-            joinColumns = @JoinColumn(name = "record_id"),
-            inverseJoinColumns = @JoinColumn(name = "service_id")
+            joinColumns = @JoinColumn(name = "record_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id")
     )
     private Set<Service> services = new HashSet<>();
 
-    @Column(nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    @Column(nullable = false)
+    @Column(name = "datetime", nullable = false)
     private Instant datetime;
 
-    @Column(nullable = false)
+    @Column(name = "create_date", nullable = false)
     private Instant createDate;
 
-    @Column(nullable = false)
+    @Column(name = "length", nullable = false)
     private int length;
 
+    @Column(name = "comment")
     private String comment;
 
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    @Column(name = "deleted", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean deleted;
 
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    @Column(name = "notify_by_sms",nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean notifyBySms;
 
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    @Column(name = "notify_by_email", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean notifyByEmail;
 
-    private LocalDateTime updated;
+    @Column(name = "updated")
+    private Instant updated;
 
     public Record() {
+        this.updated = Instant.now();
     }
 
-    public Record(Long id, Long recordInnerId, Company company, Staff staff, Client client, Set<Service> services, LocalDateTime date, Instant datetime, Instant createDate, int length, String comment, boolean deleted, boolean notifyBySms, boolean notifyByEmail) {
-        this.id = id;
-        this.recordInnerId = recordInnerId;
+    public Record(Long id, Company company, Staff staff, Client client, Set<Service> services, LocalDateTime date, Instant datetime, Instant createDate, int length, String comment, boolean deleted, boolean notifyBySms, boolean notifyByEmail) {
+        this.recordExternalId = id;
         this.company = company;
         this.staff = staff;
         this.client = client;
@@ -84,29 +89,30 @@ public class Record {
         this.deleted = deleted;
         this.notifyBySms = notifyBySms;
         this.notifyByEmail = notifyByEmail;
-        this.updated = LocalDateTime.now();
+        this.updated = Instant.now();
     }
 
     public Record(RecordDTO dto, Company company, Staff staff, Client client, Set<Service> services) {
-        this.id = dto.getId();
+        this.recordExternalId = dto.getId();
         this.company = company;
         this.staff = staff;
         this.client = client;
         this.services = services;
-        this.date = LocalDateTime.parse(dto.getDate());
+        this.date = LocalDate.parse(dto.getDate()).atStartOfDay();
         this.datetime = dto.getDatetime().toInstant();
         this.createDate = dto.getCreateDate().toInstant();
         this.comment = dto.getComment();
         this.length = dto.getLength();
         this.deleted = dto.isDeleted();
+        this.updated = Instant.now();
     }
 
-    public Long getId() {
-        return id;
+    public Long getRecordExternalId() {
+        return recordExternalId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRecordExternalId(Long id) {
+        this.recordExternalId = id;
     }
 
     public Long getRecordInnerId() {
@@ -213,7 +219,7 @@ public class Record {
         this.notifyByEmail = notifyByEmail;
     }
 
-    public LocalDateTime getUpdated() {
+    public Instant getUpdated() {
         return updated;
     }
 }

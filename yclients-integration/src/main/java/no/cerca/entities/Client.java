@@ -11,28 +11,33 @@ import no.cerca.dtos.basic.ClientDTO;
 public class Client {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "client_inner_id")
     private Long clientInnerId;
 
-    private Long id;
+    @Column(name = "id")
+    private Long clientExternalId;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "phone", nullable = false, unique = true)
     private String phone;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "surname")
     private String surname;
+
+    @Column(name = "patronymic")
     private String patronymic;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     public Client() {
     }
 
-    public Client(Long clientInnerId, Long id, String phone, String name, String surname, String patronymic, String email) {
-        this.clientInnerId = clientInnerId;
-        this.id = id;
+    public Client(Long clientExternalId, String phone, String name, String surname, String patronymic, String email) {
+        this.clientExternalId = clientExternalId;
         this.phone = phone;
         this.name = name;
         this.surname = surname;
@@ -41,7 +46,7 @@ public class Client {
     }
 
     public Client(ClientDTO dto) {
-        this.id = dto.getId();
+        this.clientExternalId = dto.getId();
         this.phone = dto.getPhone();
         this.name = dto.getName();
         this.surname = dto.getSurname();
@@ -57,12 +62,12 @@ public class Client {
         this.clientInnerId = clientInnerId;
     }
 
-    public Long getId() {
-        return id;
+    public Long getClientExternalId() {
+        return clientExternalId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setClientExternalId(Long id) {
+        this.clientExternalId = id;
     }
 
     public String getPhone() {

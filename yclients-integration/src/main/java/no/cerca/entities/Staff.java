@@ -11,46 +11,48 @@ import no.cerca.dtos.basic.StaffDTO;
 public class Staff {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "staff_inner_id", nullable = false, unique = true)
+    private Long staffInnerId;
 
-    @Column(nullable = false, unique = true)
-    private Long serviceInnerId;
+    @Column(name = "id", nullable = false, unique = true)
+    private Long externalStaffId;
 
     @Column(nullable = false)
     private String name;
 
+    @Column(name = "specialization")
     private String specialization;
 
     public Staff() {
     }
 
-    public Staff(Long id, Long serviceInnerId, String name, String specialization) {
-        this.id = id;
-        this.serviceInnerId = serviceInnerId;
+    public Staff(Long id, String name, String specialization) {
+        this.externalStaffId = id;
         this.name = name;
         this.specialization = specialization;
     }
 
     public Staff(StaffDTO dto) {
-        this.id = dto.getId();
+        this.externalStaffId = dto.getId();
         this.name = dto.getName();
         this.specialization = dto.getSpecialization();
     }
 
-    public Long getId() {
-        return id;
+    public Long getExternalStaffId() {
+        return externalStaffId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setExternalStaffId(Long id) {
+        this.externalStaffId = id;
     }
 
     public Long getServiceInnerId() {
-        return serviceInnerId;
+        return staffInnerId;
     }
 
     public void setServiceInnerId(Long serviceInnerId) {
-        this.serviceInnerId = serviceInnerId;
+        this.staffInnerId = serviceInnerId;
     }
 
     public String getName() {
