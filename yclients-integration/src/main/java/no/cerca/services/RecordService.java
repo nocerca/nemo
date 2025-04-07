@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -103,6 +102,10 @@ public class RecordService {
                 .orElseGet(() -> new Record(dto, company, staff, client, services));
 
         return recordRepository.save(record);
+    }
+
+    public List<Record> getAllRecords() {
+        return recordRepository.findAll();
     }
 
 }
