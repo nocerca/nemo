@@ -76,7 +76,8 @@ public class RecordService {
     }
 
     public Boolean wasUpdatedLessThan15minAgo(Long clientId) {
-        List<Record> records = recordRepository.getRecordsByClientIdAndUpdatedAfter(clientId, LocalDateTime.now().minusMinutes(15));
+        Instant fifteenMinutesAgo = Instant.now().minus(15, ChronoUnit.MINUTES);
+        List<Record> records = recordRepository.findByClient_ClientExternalIdAndUpdatedAfter(clientId, fifteenMinutesAgo);
         return !records.isEmpty();
     }
 
