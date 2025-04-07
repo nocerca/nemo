@@ -73,23 +73,22 @@ public class RecordService {
     }
 
     public Record createOrUpdateRecordFromDTO(RecordDTO dto) {
-        Company company = companyRepository.findById(dto.getCompanyId())
+        Company company = companyRepository.findByCompanyExternalId(dto.getCompanyId())
                 .orElseThrow(() -> new EntityNotFoundException("Company not found"));
 
-        Staff staff = staffRepository.findById(dto.getStaff().getId())
-                .orElseGet(() -> new Staff(dto.getStaff()));
+        Staff staff = staffRepository.findByExternalStaffId(dto.getStaff().getId())
+                .orElseGet(() -> staffRepository.save(new Staff(dto.getStaff())));
 
-        Client client = clientRepository.findById(dto.getClient().getId())
-                .orElseGet(() -> new Client(dto.getClient()));
+        Client client = clientRepository.findByClientExternalId(dto.getClient().getId())
+                .orElseGet(() -> clientRepository.save(new Client(dto.getClient())));
 
         Set<no.cerca.entities.Service> services = dto.getServices().stream()
-                .map(serviceDto -> serviceRepository.findById(serviceDto.getId())
-                        .orElseGet(() -> new no.cerca.entities.Service(serviceDto)))
+                .map(serviceDto -> serviceRepository.findByExternalServiceId(serviceDto.getId())
+                        .orElseGet(() -> serviceRepository.save(new no.cerca.entities.Service(serviceDto))))
                 .collect(Collectors.toSet());
 
-        return recordRepository.findById(dto.getId())
+        Record record = recordRepository.findByRecordExternalId(dto.getId())
                 .map(existingRecord -> {
-                    // Обновляем только изменившиеся поля
                     existingRecord.setCompany(company);
                     existingRecord.setStaff(staff);
                     existingRecord.setClient(client);
@@ -102,6 +101,8 @@ public class RecordService {
                     return existingRecord;
                 })
                 .orElseGet(() -> new Record(dto, company, staff, client, services));
+
+        return recordRepository.save(record);
     }
 
 }
