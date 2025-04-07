@@ -31,7 +31,6 @@
 		<developer/>
 	</developers>
     <modules>
-        <module>bot</module>
 		<module>yclients-integration</module>
 	</modules>
     <scm>
@@ -109,6 +108,18 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>2.0.16</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>1.20.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>1.20.0</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
