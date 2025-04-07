@@ -63,15 +63,6 @@ public class RecordService {
         Instant startOfDay = LocalDate.now().atStartOfDay(zoneId).toInstant();
         Instant endOfDay = LocalDate.now().atTime(LocalTime.MAX).atZone(zoneId).toInstant();
 
-    }
-
-    public void updateRecordStatus(Long recordId, boolean deleted) {
-        Optional<Record> recordOpt = recordRepository.findById(recordId);
-        recordOpt.ifPresent(record -> {
-            record.setDeleted(deleted);
-            recordRepository.save(record);
-        });
-
         return recordRepository.findByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBefore(clientId, startOfDay, endOfDay);
     }
 
