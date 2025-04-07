@@ -16,7 +16,7 @@ public class AuthService {
     private AuthRepository authRepository;
 
     public Optional<Auth> getByLogin(String login) {
-        return authRepository.getAuthByLogin(login);
+        return authRepository.findByLogin(login);
     }
 
     public Auth save(Auth auth){
