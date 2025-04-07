@@ -11,5 +11,5 @@ import java.util.Optional;
  */
 @Repository
 public interface ServiceRepository extends JpaRepository<Service, Long> {
-    Optional<Service> findById(Long id);
+    Optional<Service> findByExternalServiceId(Long externalServiceId);
 }

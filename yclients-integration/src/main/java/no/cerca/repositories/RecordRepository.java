@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,9 +13,10 @@ import java.util.Optional;
  */
 @Repository
 public interface RecordRepository extends JpaRepository<Record, Long> {
-    List<Record> findByClientId(Long clientId);
-    List<Record> findByClientIdAndDatetimeBetween(Long clientId, Instant start, Instant end);
-    List<Record> getRecordsByClientIdAndUpdatedAfter(Long clientId, LocalDateTime dateBefore);
-    Optional<Record> findFirstByClientIdAndDatetimeBeforeAndEndTimeAfterOrderByDatetimeAsc(Long clientId, Instant now, Instant nowEnd);
-    Optional<Record> findFirstByClientIdAndDatetimeAfterOrderByDatetimeAsc(Long clientId, Instant now);
+    Optional<Record> findByRecordExternalId(Long recordExternalId);
+    List<Record> findByClient_ClientExternalId(Long clientExternalId);
+    List<Record> findByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBefore(Long clientExternalId, Instant start, Instant end);
+    List<Record> findByClient_ClientExternalIdAndUpdatedAfter(Long clientExternalId, Instant dateBefore);
+    Optional<Record> findFirstByClient_ClientExternalIdAndDatetimeAfterOrderByDatetimeAsc(Long clientExternalId, Instant now);
+    Optional<Record> findFirstByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBeforeOrderByDatetimeAsc(Long clientExternalId, Instant start, Instant end);
 }
