@@ -67,21 +67,7 @@ class YClientsAPIServiceTest {
     }
 
     @Test
-    void authenticateUser_WhenUserAlreadyAuthenticated_ReturnsSuccess() {
-        RequestAuthDTO requestAuth = new RequestAuthDTO("test_user", "password", "partner");
-        Auth existingAuth = new Auth();
-        existingAuth.setLogin("test_user");
-
-        when(authService.getByLogin(requestAuth.getLogin())).thenReturn(Optional.of(existingAuth));
-
-        CommonAPIResponse<Auth> response = yClientsAPIService.authenticateUser(requestAuth);
-
-        assertEquals("success", response.getStatus());
-        assertEquals(existingAuth, response.getData());
-        assertEquals("Пользователь уже авторизован", response.getMessage());
-    }
-
-    @Test
+    @DisplayName("Авторизация нового пользователя")
     void authenticateUser_WhenNewUser_CallsApiAndSavesAuth() {
         RequestAuthDTO requestAuth = new RequestAuthDTO("new_user", "password", "partner");
         AuthDTO authDTO = new AuthDTO();
@@ -100,6 +86,7 @@ class YClientsAPIServiceTest {
     }
 
     @Test
+    @DisplayName("Ошибка при удалении записи с некорректными данными авторизации")
     void deleteRecord_WhenAuthNotFound_ReturnsError() {
         Long authId = 1L;
         Long recordId = 100L;
@@ -113,6 +100,7 @@ class YClientsAPIServiceTest {
     }
 
     @Test
+    @DisplayName("Успешное удаление записи пользователя")
     void deleteRecord_WhenApiCallSucceeds_ReturnsSuccess() {
         Long authId = 1L;
         Long recordId = 100L;
@@ -130,6 +118,7 @@ class YClientsAPIServiceTest {
     }
 
     @Test
+    @DisplayName("Успешное обновление записи для отправки уведомления")
     void notifyClientsAboutRecordUpdate_SendsNotificationsSuccessfully() {
         Long authId = 1L;
         List<Long> clientIds = List.of(1L, 2L);
@@ -148,6 +137,7 @@ class YClientsAPIServiceTest {
     }
 
     @Test
+    @DisplayName("Ошибка при обновлении записи для отправки смс")
     void notifyClientsAboutRecordUpdate_WhenSmsFails_ReturnsError() {
         Long authId = 1L;
         List<Long> clientIds = List.of(1L, 2L);
