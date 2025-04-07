@@ -1,5 +1,5 @@
 CREATE TABLE company (
-                         companyInnerId BIGINT PRIMARY KEY,
+                         company_inner_id BIGSERIAL PRIMARY KEY, -- Auto-generate the companyInnerId
                          id BIGINT UNIQUE NOT NULL,
                          title VARCHAR(255) NOT NULL,
                          phone VARCHAR(20),
@@ -10,13 +10,14 @@ CREATE TABLE company (
 );
 
 CREATE TABLE staff (
-                       staffInnerId BIGINT PRIMARY KEY,
+                       staff_inner_id BIGSERIAL PRIMARY KEY, -- Auto-generate the staffInnerId
                        id BIGINT UNIQUE NOT NULL,
-                       name VARCHAR(255) NOT NULL
+                       name VARCHAR(255) NOT NULL,
+                       specialization VARCHAR(255)
 );
 
 CREATE TABLE client (
-                        clientInnerId BIGINT PRIMARY KEY,
+                        client_inner_id BIGSERIAL PRIMARY KEY, -- Auto-generate the clientInnerId
                         id BIGINT UNIQUE NOT NULL,
                         phone VARCHAR(20) UNIQUE NOT NULL,
                         name VARCHAR(255),
@@ -26,7 +27,7 @@ CREATE TABLE client (
 );
 
 CREATE TABLE service (
-                         serviceInnerId BIGINT PRIMARY KEY,
+                         service_inner_id BIGSERIAL PRIMARY KEY, -- Auto-generate the serviceInnerId
                          id BIGINT UNIQUE NOT NULL,
                          title VARCHAR(255) NOT NULL,
                          weight INT NOT NULL,
@@ -34,27 +35,33 @@ CREATE TABLE service (
 );
 
 CREATE TABLE record (
-                        recordInnerId BIGINT PRIMARY KEY,
+                        record_inner_id BIGSERIAL PRIMARY KEY,
                         id BIGINT UNIQUE NOT NULL,
-                        companyInnerId BIGINT NOT NULL,
-                        staffInnerId BIGINT NOT NULL,
-                        clientInnerId BIGINT NOT NULL,
+
+                        company_id BIGINT NOT NULL,
+                        staff_id BIGINT NOT NULL,
+                        client_id BIGINT NOT NULL,
+
                         date TIMESTAMP NOT NULL,
                         datetime TIMESTAMP NOT NULL,
                         create_date TIMESTAMP NOT NULL,
                         length INT NOT NULL,
                         comment TEXT,
                         deleted BOOLEAN NOT NULL DEFAULT FALSE,
+                        notify_by_sms BOOLEAN NOT NULL DEFAULT FALSE,
+                        notify_by_email BOOLEAN NOT NULL DEFAULT FALSE,
                         updated TIMESTAMP,
-                        FOREIGN KEY (companyInnerId) REFERENCES company(companyInnerId),
-                        FOREIGN KEY (staffInnerId) REFERENCES staff(staffInnerId),
-                        FOREIGN KEY (clientInnerId) REFERENCES client(clientInnerId)
+
+                        FOREIGN KEY (company_id) REFERENCES company(id) ON DELETE CASCADE,
+                        FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE,
+                        FOREIGN KEY (client_id) REFERENCES client(id) ON DELETE CASCADE
 );
 
 CREATE TABLE record_service (
-                                record_serviceInnerId BIGINT PRIMARY KEY,
-                                recordInnerId BIGINT NOT NULL,
-                                serviceInnerId BIGINT NOT NULL,
-                                FOREIGN KEY (recordInnerId) REFERENCES record(recordInnerId) ON DELETE CASCADE,
-                                FOREIGN KEY (serviceInnerId) REFERENCES service(serviceInnerId) ON DELETE CASCADE
+                                record_service_inner_id BIGSERIAL PRIMARY KEY,
+                                record_id BIGINT NOT NULL,
+                                service_id BIGINT NOT NULL,
+
+                                FOREIGN KEY (record_id) REFERENCES record(id) ON DELETE CASCADE,
+                                FOREIGN KEY (service_id) REFERENCES service(id) ON DELETE CASCADE
 );

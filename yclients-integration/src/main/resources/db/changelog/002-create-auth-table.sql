@@ -1,5 +1,5 @@
 CREATE TABLE auth (
-                      id BIGINT PRIMARY KEY,
+                      id BIGSERIAL PRIMARY KEY,
                       user_token VARCHAR(255) NOT NULL,
                       name VARCHAR(255),
                       phone VARCHAR(20),
