@@ -1,6 +1,6 @@
 package api.service;
 
-import no.cerca.api.YClientsAPIService;
+import no.cerca.api.service.YClientsAPIService;
 import no.cerca.api.client.YClientsAPIClient;
 import no.cerca.api.response.CommonAPIResponse;
 import no.cerca.dtos.basic.AuthDTO;

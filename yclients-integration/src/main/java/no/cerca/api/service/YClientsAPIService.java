@@ -1,4 +1,4 @@
-package no.cerca.api;
+package no.cerca.api.service;
 
 import jakarta.transaction.Transactional;
 import no.cerca.api.client.YClientsAPIClient;
