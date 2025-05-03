@@ -5,16 +5,15 @@ import no.cerca.api.service.YClientsAPIService;
 import no.cerca.dtos.basic.ClientDTO;
 import no.cerca.dtos.basic.ServiceDTO;
 import no.cerca.dtos.exchange.RequestCreateDTO;
+import no.cerca.exception.CustomBotException;
+import no.cerca.state.BotState;
 import no.cerca.util.UserSession;
 import ru.mail.im.botapi.BotApiClientController;
 import ru.mail.im.botapi.BotLogger;
 import ru.mail.im.botapi.api.entity.SendTextRequest;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -45,7 +44,7 @@ public class CreateRecordState implements BotState {
                 case STAFF:
                     draft.setStaffId(Long.parseLong(input));
                     currentStep = Step.SERVICE;
-                    askForInput(chatId, botController, "Введите ID услуги:");
+                    //TODO: реализовать логику добавления нескольких услуг
                     askForInput(chatId, botController, "Введите название услуги:");
                     break;
 
@@ -55,7 +54,7 @@ public class CreateRecordState implements BotState {
                     services.add(service);
                     draft.setServices(services);
                     currentStep = Step.CLIENT;
-                    askForInput(chatId, botController, "Введите ID клиента:");
+                    //TODO: для клиента добавить логику проверки наличия в базе для установки флага isNew
                     askForInput(chatId, botController, "Введите данные клиента в формате (фамилия имя отчество телефон email):");
                     break;
 
