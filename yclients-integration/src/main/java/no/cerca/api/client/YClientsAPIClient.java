@@ -102,7 +102,6 @@ public class YClientsAPIClient {
         );
 
         if (!response.getStatusCode().equals(HttpStatus.NO_CONTENT)) {
-            //logger
             throw new DeleteRecordException(response.getStatusCode(), "Не удалось удалить запись: " + response.getStatusCode());
         }
     }
@@ -140,15 +139,12 @@ public class YClientsAPIClient {
 
     private void checkForErrors(ResponseEntity<?> response) {
         if (response.getStatusCode() == HttpStatus.UNAUTHORIZED) {
-            //logger
             throw new UnauthorizedException("Не указан идентификатор пользователя или партнера");
         }
         if (response.getStatusCode() == HttpStatus.FORBIDDEN) {
-            //logger
             throw new ForbiddenException("Недостаточно прав");
         }
         if (response.getBody() instanceof ResponseDTO<?> dto && !dto.isSuccess()) {
-            //logger
             throw new YClientsApiException(response.getStatusCode(), ((LinkedHashMap<String, String>) dto.getMeta().get(0)).get("message"));
         }
     }
