@@ -214,11 +214,16 @@ public class CommandProcessor {
             createDTO.setStaffId(Long.parseLong(matcher.group(2)));
 
             ServiceDTO service = new ServiceDTO();
-            service.setId(Long.parseLong(matcher.group(3)));
+            service.setTitle(matcher.group(3));
             createDTO.setServices(List.of(service));
 
+            String[] clientParts = matcher.group(4).split(" ");
             ClientDTO client = new ClientDTO();
-            client.setId(Long.parseLong(matcher.group(4)));
+            client.setSurname(clientParts[0]);
+            client.setName(clientParts.length > 1 ? clientParts[1] : "");
+            client.setPatronymic(clientParts.length > 2 ? clientParts[2] : "");
+            client.setPhone(clientParts.length > 3 ? clientParts[3] : "");
+            client.setEmail(clientParts.length > 4 ? clientParts[4] : "");
             createDTO.setClient(client);
 
             createDTO.setSeanceLength(Integer.parseInt(matcher.group(5)));
