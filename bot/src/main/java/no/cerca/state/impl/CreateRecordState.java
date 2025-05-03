@@ -50,7 +50,7 @@ public class CreateRecordState implements BotState {
 
                 case SERVICE:
                     ServiceDTO service = new ServiceDTO();
-                    service.setId(Long.parseLong(input));
+                    service.setTitle(input);
                     services.add(service);
                     draft.setServices(services);
                     currentStep = Step.CLIENT;
@@ -64,8 +64,13 @@ public class CreateRecordState implements BotState {
                     }
 
                     ClientDTO client = new ClientDTO();
-                    client.setId(Long.parseLong(input));
+                    client.setSurname(creds.get(0));
+                    client.setName(creds.get(1));
+                    client.setPatronymic(creds.get(2));
+                    client.setPhone(creds.get(3));
+                    client.setEmail(creds.get(4));
                     draft.setClient(client);
+
                     currentStep = Step.DURATION;
                     askForInput(chatId, botController, "Введите длительность в минутах:");
                     break;
