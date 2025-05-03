@@ -66,13 +66,22 @@ public class CreateRecordState implements BotState {
                     break;
 
                 case DURATION:
-                    draft.setSeanceLength(Integer.parseInt(input));
+                    try {
+                        draft.setSeanceLength(Integer.parseInt(input));
+                    } catch (Exception e) {
+                        throw new CustomBotException("число введено некорректно");
+                    }
                     currentStep = Step.SMS_NOTIFY;
                     askForInput(chatId, botController, "За сколько часов уведомить по SMS (0 чтобы пропустить):");
                     break;
 
                 case SMS_NOTIFY:
-                    int smsHours = Integer.parseInt(input);
+                    int smsHours;
+                    try {
+                        smsHours = Integer.parseInt(input);
+                    } catch (Exception e) {
+                        throw new CustomBotException("число введено некорректно");
+                    }
                     if (smsHours > 0) {
                         draft.setSmsRemainHours(smsHours);
                         draft.setSendSms(true);
@@ -82,7 +91,12 @@ public class CreateRecordState implements BotState {
                     break;
 
                 case EMAIL_NOTIFY:
-                    int emailHours = Integer.parseInt(input);
+                    int emailHours;
+                    try {
+                        emailHours = Integer.parseInt(input);
+                    } catch (Exception e) {
+                        throw new CustomBotException("число введено некорректно");
+                    }
                     if (emailHours > 0) {
                         draft.setEmailRemainHours(emailHours);
                     }
