@@ -1,6 +1,5 @@
 package no.cerca.util;
 
-import lombok.RequiredArgsConstructor;
 import no.cerca.api.response.CommonAPIResponse;
 import no.cerca.api.service.YClientsAPIService;
 import no.cerca.dtos.basic.ClientDTO;
@@ -30,11 +29,15 @@ import java.util.stream.Collectors;
  * Created by jadae on 17.04.2025
  */
 @Component
-@RequiredArgsConstructor
 public class CommandProcessor {
     private final BotApiClientController botController;
     private final YClientsAPIService yClientsService;
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+    public CommandProcessor(BotApiClientController botController, YClientsAPIService yClientsAPIService) {
+        this.botController = botController;
+        this.yClientsAPIService = yClientsAPIService;
+    }
 
     public void processCommand(String command, Chat chat, UserSession session) {
         String[] parts = command.split(" ", 2);
