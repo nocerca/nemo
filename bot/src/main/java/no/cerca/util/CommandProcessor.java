@@ -468,50 +468,5 @@ public class CommandProcessor {
             BotLogger.e(e, "Set email notification error");
         }
     }
-//    ToDo: добавить логику получения клиентов для удобной отправки уведомлений
-//    private void handleSendSmsCommand(Chat chat, String arguments, UserSession session) {
-//        if (!checkAuth(chat.getChatId(), session)) return;
-//
-//        try {
-//            RequestMessageDTO messageDTO = new RequestMessageDTO();
-//            messageDTO.setText(arguments);
-//
-//            CommonAPIResponse<Void> response = yClientsService.sendCustomSmsToClients(
-//                    session.getAuth().getId(),
-//                    messageDTO
-//            );
-//
-//            sendMessage(chat.getChatId(), response.getMessage());
-//        } catch (Exception e) {
-//            sendMessage(chat.getChatId(), "Ошибка отправки SMS");
-//            BotLogger.e(e, "Send SMS error");
-//        }
-//    }
-//
-//    private void handleSendEmailCommand(Chat chat, String arguments, UserSession session) {
-//        if (!checkAuth(chat.getChatId(), session)) return;
-//
-//        try {
-//            String[] parts = arguments.split(" ", 2);
-//            if (parts.length != 2) {
-//                sendMessage(chat.getChatId(), "Формат: /sendemail [тема] [текст]");
-//                return;
-//            }
-//
-//            RequestMessageDTO messageDTO = new RequestMessageDTO();
-//            messageDTO.setSubject(parts[0]);
-//            messageDTO.setText(parts[1]);
-//
-//            CommonAPIResponse<Void> response = yClientsService.sendCustomEmailToClients(
-//                    session.getAuth().getId(),
-//                    messageDTO
-//            );
-//
-//            sendMessage(chat.getChatId(), response.getMessage());
-//        } catch (Exception e) {
-//            sendMessage(chat.getChatId(), "Ошибка отправки email");
-//            BotLogger.e(e, "Send email error");
-//        }
-//    }
 
 }
