@@ -51,4 +51,12 @@ public class UserSession {
     public void clearContext() {
         context.clear();
     }
+
+    public Map<String, Object> getContext() {
+        return context;
+    }
+
+    public void setContext(Map<String, Object> context) {
+        this.context = context;
+    }
 }
