@@ -15,7 +15,7 @@ import ru.mail.im.botapi.BotApiClientController;
 @Configuration
 public class BotConfiguration {
     @Value("${vk.teams.bot.token}")
-    private String botToken;
+    private static String botToken;
 
     @Bean
     public BotApiClient botApiClient() {
@@ -28,12 +28,15 @@ public class BotConfiguration {
     }
 
     @Bean
-    public BotEventHandler botEventHandler(YClientsAPIService yClientsService, BotApiClientController botApiClientController, CommandProcessor commandProcessor) {
-        return new BotEventHandler(yClientsService, botApiClientController, commandProcessor);
+    public BotEventHandler botEventHandler(YClientsAPIService yClientsService,
+                                           BotApiClientController botController,
+                                           CommandProcessor commandProcessor) {
+        return new BotEventHandler(yClientsService, botController, commandProcessor);
     }
 
     @Bean
-    public CommandProcessor commandProcessor(YClientsAPIService yClientsService, BotApiClientController botApiClientController) {
-        return new CommandProcessor(botApiClientController, yClientsService);
+    public CommandProcessor commandProcessor(YClientsAPIService yClientsService,
+                                             BotApiClientController botController) {
+        return new CommandProcessor(botController, yClientsService);
     }
 }
