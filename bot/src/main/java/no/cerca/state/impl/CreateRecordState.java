@@ -58,6 +58,11 @@ public class CreateRecordState implements BotState {
                     break;
 
                 case CLIENT:
+                    List<String> creds = Arrays.stream(input.split(" ")).toList();
+                    if (creds.size() != 5) {
+                        throw new CustomBotException("данные введены неправильно, придерживайтесь формата (фамилия имя отчество телефон email)");
+                    }
+
                     ClientDTO client = new ClientDTO();
                     client.setId(Long.parseLong(input));
                     draft.setClient(client);
