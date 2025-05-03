@@ -1,18 +1,14 @@
 package no.cerca.util;
 
-import lombok.RequiredArgsConstructor;
 import no.cerca.api.service.YClientsAPIService;
-import no.cerca.state.AuthState;
 import org.springframework.stereotype.Component;
 import ru.mail.im.botapi.BotApiClientController;
 import ru.mail.im.botapi.BotLogger;
-import ru.mail.im.botapi.api.entity.SendTextRequest;
 import ru.mail.im.botapi.fetcher.Chat;
 import ru.mail.im.botapi.fetcher.OnEventFetchListener;
 import ru.mail.im.botapi.fetcher.User;
 import ru.mail.im.botapi.fetcher.event.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,12 +17,17 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by jadae on 17.04.2025
  */
 @Component
-@RequiredArgsConstructor
 public class BotEventHandler implements OnEventFetchListener {
     private final Map<String, UserSession> userSessions = new ConcurrentHashMap<>();
     private final YClientsAPIService yClientsService;
     private final BotApiClientController botController;
     private final CommandProcessor commandProcessor;
+
+    public BotEventHandler(YClientsAPIService yClientsService, BotApiClientController botController, CommandProcessor commandProcessor) {
+        this.yClientsService = yClientsService;
+        this.botController = botController;
+        this.commandProcessor = commandProcessor;
+    }
 
     @Override
     public void onEventFetch(List<Event> events) {
@@ -71,5 +72,9 @@ public class BotEventHandler implements OnEventFetchListener {
 
     private void handleCallback(CallbackQueryEvent event) {
         // Обработка callback-ов
+    }
+
+    public UserSession getUserSession(String userId) {
+        return userSessions.get(userId);
     }
 }
