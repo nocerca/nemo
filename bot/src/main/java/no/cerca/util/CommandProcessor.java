@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Component
 public class CommandProcessor {
     private final BotApiClientController botController;
-    private final YClientsAPIService yClientsService;
+    private final YClientsAPIService yClientsAPIService;
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public CommandProcessor(BotApiClientController botController, YClientsAPIService yClientsAPIService) {
@@ -110,7 +110,7 @@ public class CommandProcessor {
         }
 
         RequestAuthDTO authDTO = new RequestAuthDTO(credentials[0], credentials[1], credentials[2]);
-        CommonAPIResponse<Auth> response = yClientsService.authenticateUser(authDTO);
+        CommonAPIResponse<Auth> response = yClientsAPIService.authenticateUser(authDTO);
 
         if ("success".equals(response.getStatus())) {
             session.setAuth(response.getData());
@@ -157,7 +157,7 @@ public class CommandProcessor {
     private void handleCurrentRecordCommand(Chat chat, UserSession session) {
         if (!checkAuth(chat.getChatId(), session)) return;
 
-        CommonAPIResponse<Record> response = yClientsService.getCurrentRecord(
+        CommonAPIResponse<Record> response = yClientsAPIService.getCurrentRecord(
                 session.getAuth().getId(),
                 new RequestRecordsDTO()
         );
@@ -172,7 +172,7 @@ public class CommandProcessor {
     private void handleNextRecordCommand(Chat chat, UserSession session) {
         if (!checkAuth(chat.getChatId(), session)) return;
 
-        CommonAPIResponse<Record> response = yClientsService.getNextRecord(
+        CommonAPIResponse<Record> response = yClientsAPIService.getNextRecord(
                 session.getAuth().getId(),
                 new RequestRecordsDTO()
         );
@@ -233,7 +233,7 @@ public class CommandProcessor {
                 createDTO.setComment(matcher.group(8));
             }
 
-            CommonAPIResponse<Void> response = yClientsService.createRecord(
+            CommonAPIResponse<Void> response = yClientsAPIService.createRecord(
                     session.getAuth().getId(),
                     createDTO
             );
@@ -271,7 +271,7 @@ public class CommandProcessor {
 
         try {
             LocalDateTime pauseTime = LocalDateTime.parse(arguments, dateTimeFormatter);
-            CommonAPIResponse<Void> response = yClientsService.createPauseRecord(
+            CommonAPIResponse<Void> response = yClientsAPIService.createPauseRecord(
                     session.getAuth().getId(),
                     pauseTime
             );
@@ -287,7 +287,7 @@ public class CommandProcessor {
 
         try {
             Long recordId = Long.parseLong(arguments);
-            CommonAPIResponse<Void> response = yClientsService.deleteRecord(
+            CommonAPIResponse<Void> response = yClientsAPIService.deleteRecord(
                     session.getAuth().getId(),
                     recordId
             );
@@ -376,7 +376,7 @@ public class CommandProcessor {
             updateDTO.setDatetime(newDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             updateDTO.setComment(parts[2]);
 
-            CommonAPIResponse<Record> response = yClientsService.updateRecord(
+            CommonAPIResponse<Record> response = yClientsAPIService.updateRecord(
                     session.getAuth().getId(),
                     recordId,
                     updateDTO
@@ -411,7 +411,7 @@ public class CommandProcessor {
             Long recordId = Long.parseLong(parts[0]);
             Integer hours = Integer.parseInt(parts[1]);
 
-            CommonAPIResponse<Record> response = yClientsService.setSmsNotificationRequired(
+            CommonAPIResponse<Record> response = yClientsAPIService.setSmsNotificationRequired(
                     session.getAuth().getId(),
                     recordId,
                     hours
@@ -444,7 +444,7 @@ public class CommandProcessor {
             Long recordId = Long.parseLong(parts[0]);
             Integer hours = Integer.parseInt(parts[1]);
 
-            CommonAPIResponse<Record> response = yClientsService.setEmailNotificationRequired(
+            CommonAPIResponse<Record> response = yClientsAPIService.setEmailNotificationRequired(
                     session.getAuth().getId(),
                     recordId,
                     hours
