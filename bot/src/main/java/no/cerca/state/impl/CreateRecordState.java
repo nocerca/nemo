@@ -28,6 +28,7 @@ public class CreateRecordState implements BotState {
     private Step currentStep = Step.DATETIME;
     private final RequestCreateDTO draft = new RequestCreateDTO();
     private final List<ServiceDTO> services = new ArrayList<>();
+    //TODO: custom поля добавить в процесс заполнения данных записи
     private final Map<String, Object> customFields = new HashMap<>();
 
     @Override
@@ -38,6 +39,7 @@ public class CreateRecordState implements BotState {
                 case DATETIME:
                     draft.setDatetime(input);
                     currentStep = Step.STAFF;
+                    //TODO добавить поиск по фио сотрудника
                     askForInput(chatId, botController, "Введите ID сотрудника:");
                     break;
 
