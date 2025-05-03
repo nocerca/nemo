@@ -10,7 +10,7 @@ public class CustomBotException extends RuntimeException {
     public CustomBotException() {
         super(MESSAGE);
     }
-    public CustomBotException(String message, Exception ex) {
+    public CustomBotException(String message) {
         super(message);
     }
 }
