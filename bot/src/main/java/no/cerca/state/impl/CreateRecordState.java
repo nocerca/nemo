@@ -46,6 +46,7 @@ public class CreateRecordState implements BotState {
                     draft.setStaffId(Long.parseLong(input));
                     currentStep = Step.SERVICE;
                     askForInput(chatId, botController, "Введите ID услуги:");
+                    askForInput(chatId, botController, "Введите название услуги:");
                     break;
 
                 case SERVICE:
@@ -55,6 +56,7 @@ public class CreateRecordState implements BotState {
                     draft.setServices(services);
                     currentStep = Step.CLIENT;
                     askForInput(chatId, botController, "Введите ID клиента:");
+                    askForInput(chatId, botController, "Введите данные клиента в формате (фамилия имя отчество телефон email):");
                     break;
 
                 case CLIENT:
@@ -111,7 +113,7 @@ public class CreateRecordState implements BotState {
                         draft.setEmailRemainHours(emailHours);
                     }
                     currentStep = Step.COMMENT;
-                    askForInput(chatId, botController, "Введите комментарий (или 'пропустить'):");
+                    askForInput(chatId, botController, "Введите комментарий (или 0, чтобы пропустить):");
                     break;
 
                 case COMMENT:
@@ -157,23 +159,46 @@ public class CreateRecordState implements BotState {
     private void sendConfirmation(String chatId, BotApiClientController botController) {
         try {
             StringBuilder sb = new StringBuilder("Подтвердите данные записи:\n");
-            sb.append("Дата: ").append(draft.getDatetime()).append("\n");
-            sb.append("Сотрудник ID: ").append(draft.getStaffId()).append("\n");
+            sb.append("Дата: ")
+                    .append(draft.getDatetime())
+                    .append("\n");
+            sb.append("Сотрудник ID: ")
+                    .append(draft.getStaffId())
+                    .append("\n");
             sb.append("Услуги: ").append(draft.getServices().stream()
                     .map(ServiceDTO::getId)
-                    .collect(Collectors.toList())).append("\n");
-            sb.append("Клиент ID: ").append(draft.getClient().getId()).append("\n");
-            sb.append("Длительность: ").append(draft.getSeanceLength()).append(" мин\n");
+                    .collect(Collectors.toList()))
+                    .append("\n");
+            sb.append("Данные клиента: ")
+                    .append(draft.getClient().getName())
+                    .append(" ")
+                    .append(draft.getClient().getSurname())
+                    .append(" ")
+                    .append(draft.getClient().getPatronymic())
+                    .append(" ")
+                    .append(draft.getClient().getPhone())
+                    .append(" ")
+                    .append(draft.getClient().getEmail())
+                    .append("\n");
+            sb.append("Длительность: ")
+                    .append(draft.getSeanceLength())
+                    .append(" мин\n");
             if (draft.getSmsRemainHours() != null) {
-                sb.append("SMS уведомление за: ").append(draft.getSmsRemainHours()).append(" ч\n");
+                sb.append("SMS уведомление за: ")
+                        .append(draft.getSmsRemainHours())
+                        .append(" ч\n");
             }
             if (draft.getEmailRemainHours() != null) {
-                sb.append("Email уведомление за: ").append(draft.getEmailRemainHours()).append(" ч\n");
+                sb.append("Email уведомление за: ")
+                        .append(draft.getEmailRemainHours())
+                        .append(" ч\n");
             }
             if (draft.getComment() != null) {
-                sb.append("Комментарий: ").append(draft.getComment()).append("\n");
+                sb.append("Комментарий: ")
+                        .append(draft.getComment())
+                        .append("\n");
             }
-            sb.append("\nОтветьте 'да' или 'нет'");
+            sb.append("\nОтветьте '0' - нет или '1' - да");
 
             botController.sendTextMessage(new SendTextRequest()
                     .setChatId(chatId)
