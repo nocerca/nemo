@@ -121,7 +121,7 @@ public class CommandProcessor {
     private void handleRecordsCommand(Chat chat, UserSession session) {
         if (!checkAuth(chat.getChatId(), session)) return;
 
-        CommonAPIResponse<List<Record>> response = yClientsService.getAllRecordsForClient(
+        CommonAPIResponse<List<Record>> response = yClientsAPIService.getAllRecords(
                 session.getAuth().getId(),
                 new RequestRecordsDTO()
         );
@@ -132,7 +132,7 @@ public class CommandProcessor {
     private void handleRecordsTodayCommand(Chat chat, UserSession session) {
         if (!checkAuth(chat.getChatId(), session)) return;
 
-        CommonAPIResponse<List<Record>> response = yClientsService.getAllRecordsForClientForDay(
+        CommonAPIResponse<List<Record>> response = yClientsAPIService.getAllRecordsForDay(
                 session.getAuth().getId(),
                 new RequestRecordsDTO()
         );
@@ -143,7 +143,7 @@ public class CommandProcessor {
     private void handleRecordsNextHourCommand(Chat chat, UserSession session) {
         if (!checkAuth(chat.getChatId(), session)) return;
 
-        CommonAPIResponse<List<Record>> response = yClientsService.getAllRecordsForClientForHour(
+        CommonAPIResponse<List<Record>> response = yClientsAPIService.getAllRecordsForHour(
                 session.getAuth().getId(),
                 new RequestRecordsDTO()
         );
