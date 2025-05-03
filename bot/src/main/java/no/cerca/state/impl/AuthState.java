@@ -1,5 +1,6 @@
 package no.cerca.state.impl;
 
+import no.cerca.state.BotState;
 import no.cerca.util.UserSession;
 import no.cerca.api.response.CommonAPIResponse;
 import no.cerca.api.service.YClientsAPIService;
