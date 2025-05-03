@@ -115,7 +115,7 @@ public class CreateRecordState implements BotState {
                     break;
 
                 case COMMENT:
-                    if (!"пропустить".equalsIgnoreCase(input)) {
+                    if (!"0".equals(input)) {
                         draft.setComment(input);
                     }
                     currentStep = Step.CONFIRM;
@@ -123,7 +123,7 @@ public class CreateRecordState implements BotState {
                     break;
 
                 case CONFIRM:
-                    if ("да".equalsIgnoreCase(input)) {
+                    if ("1".equalsIgnoreCase(input)) {
                         CommonAPIResponse<Void> response = yClientsService.createRecord(
                                 session.getAuth().getId(),
                                 draft
