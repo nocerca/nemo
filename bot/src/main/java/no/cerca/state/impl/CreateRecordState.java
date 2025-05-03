@@ -1,4 +1,4 @@
-package no.cerca.state;
+package no.cerca.state.impl;
 
 import no.cerca.api.response.CommonAPIResponse;
 import no.cerca.api.service.YClientsAPIService;
