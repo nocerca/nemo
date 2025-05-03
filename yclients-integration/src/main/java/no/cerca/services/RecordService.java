@@ -36,38 +36,38 @@ public class RecordService {
     @Autowired
     private StaffRepository staffRepository;
 
-    public List<Record> getAllRecordsForClient(Long clientId) {
-        return recordRepository.findByClient_ClientExternalId(clientId);
+    public List<Record> getAllRecords() {
+        return recordRepository.findAll();
     }
 
-    public List<Record> getRecordsForNextHour(Long clientId) {
+    public List<Record> getRecordsForNextHour() {
         Instant start = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
         Instant end = start.plus(1, ChronoUnit.HOURS);
-        return recordRepository.findByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBefore(clientId, start, end);
+        return recordRepository.findByDatetimeAfterAndDatetimeBefore(start, end);
     }
 
-    public Record getCurrentRecord(Long clientId) {
+    public Record getCurrentRecord() {
         Instant start = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().minus(10, ChronoUnit.MINUTES);
         Instant end = start.plus(10, ChronoUnit.SECONDS);
-        return recordRepository.findFirstByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBeforeOrderByDatetimeAsc(clientId, start, end).orElse(null);
+        return recordRepository.findFirstByDatetimeAfterAndDatetimeBeforeOrderByDatetimeAsc(start, end).orElse(null);
     }
 
-    public Record getNextRecord(Long clientId) {
+    public Record getNextRecord() {
         Instant now = Instant.now();
-        return recordRepository.findFirstByClient_ClientExternalIdAndDatetimeAfterOrderByDatetimeAsc(clientId, now).orElse(null);
+        return recordRepository.findFirstByDatetimeAfterOrderByDatetimeAsc(now).orElse(null);
     }
 
-    public List<Record> getRecordsForToday(Long clientId) {
+    public List<Record> getRecordsForToday() {
         ZoneId zoneId = ZoneId.systemDefault();
         Instant startOfDay = LocalDate.now().atStartOfDay(zoneId).toInstant();
         Instant endOfDay = LocalDate.now().atTime(LocalTime.MAX).atZone(zoneId).toInstant();
 
-        return recordRepository.findByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBefore(clientId, startOfDay, endOfDay);
+        return recordRepository.findByDatetimeAfterAndDatetimeBefore(startOfDay, endOfDay);
     }
 
-    public Boolean wasUpdatedLessThan15minAgo(Long clientId) {
+    public Boolean wasUpdatedLessThan15minAgo() {
         Instant fifteenMinutesAgo = Instant.now().minus(15, ChronoUnit.MINUTES);
-        List<Record> records = recordRepository.findByClient_ClientExternalIdAndUpdatedAfter(clientId, fifteenMinutesAgo);
+        List<Record> records = recordRepository.findByUpdatedAfter(fifteenMinutesAgo);
         return !records.isEmpty();
     }
 
@@ -102,10 +102,6 @@ public class RecordService {
                 .orElseGet(() -> new Record(dto, company, staff, client, services));
 
         return recordRepository.save(record);
-    }
-
-    public List<Record> getAllRecords() {
-        return recordRepository.findAll();
     }
 
 }
