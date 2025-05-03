@@ -82,12 +82,6 @@ public class CommandProcessor {
                 case "/setemailnotification":
                     handleSetEmailNotificationCommand(chat, arguments, session);
                     break;
-                case "/sendsms":
-                    //handleSendSmsCommand(chat, arguments, session);
-                    break;
-                case "/sendemail":
-                    //handleSendEmailCommand(chat, arguments, session);
-                    break;
                 default:
                     sendMessage(chat.getChatId(), "Неизвестная команда. Введите /help для списка команд");
             }
