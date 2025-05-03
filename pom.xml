@@ -32,7 +32,8 @@
 	</developers>
     <modules>
 		<module>yclients-integration</module>
-	</modules>
+        <module>bot</module>
+    </modules>
     <scm>
 		<connection/>
 		<developerConnection/>
