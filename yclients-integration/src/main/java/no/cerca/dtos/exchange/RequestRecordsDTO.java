@@ -9,17 +9,13 @@ import jakarta.validation.constraints.NotNull;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestRecordsDTO {
 
-    @NotNull
     private Long staffId;
-    @NotNull
     private Long clientId;
     private String startDate;
     private String endDate;
     private String cStartDate;
     private String cEndDate;
-    @NotNull
     private Integer page;
-    @NotNull
     private Integer count;
 
     public RequestRecordsDTO(Long staffId, Long clientId, String startDate, String endDate, String cStartDate, String cEndDate, Integer page, Integer count) {
