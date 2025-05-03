@@ -56,28 +56,28 @@ public class YClientsAPIService {
     }
 
     @Transactional
-    public CommonAPIResponse<List<Record>> getAllRecordsForClient(Long authId, RequestRecordsDTO requestRecordsDTO) {
-        return fetchRecords(authId, requestRecordsDTO, recordService::getAllRecordsForClient);
+    public CommonAPIResponse<List<Record>> getAllRecords(Long authId, RequestRecordsDTO requestRecordsDTO) {
+        return fetchRecords(authId, requestRecordsDTO, recordService.getAllRecords());
     }
 
     @Transactional
-    public CommonAPIResponse<List<Record>> getAllRecordsForClientForDay(Long authId, RequestRecordsDTO requestRecordsDTO) {
-        return fetchRecords(authId, requestRecordsDTO, recordService::getRecordsForToday);
+    public CommonAPIResponse<List<Record>> getAllRecordsForDay(Long authId, RequestRecordsDTO requestRecordsDTO) {
+        return fetchRecords(authId, requestRecordsDTO, recordService.getRecordsForToday());
     }
 
     @Transactional
-    public CommonAPIResponse<List<Record>> getAllRecordsForClientForHour(Long authId, RequestRecordsDTO requestRecordsDTO) {
-        return fetchRecords(authId, requestRecordsDTO, recordService::getRecordsForNextHour);
+    public CommonAPIResponse<List<Record>> getAllRecordsForHour(Long authId, RequestRecordsDTO requestRecordsDTO) {
+        return fetchRecords(authId, requestRecordsDTO, recordService.getRecordsForNextHour());
     }
 
     @Transactional
     public CommonAPIResponse<Record> getCurrentRecord(Long authId, RequestRecordsDTO requestRecordsDTO) {
-        return fetchSingleRecord(authId, requestRecordsDTO, recordService::getCurrentRecord);
+        return fetchSingleRecord(authId, requestRecordsDTO, recordService.getCurrentRecord());
     }
 
     @Transactional
     public CommonAPIResponse<Record> getNextRecord(Long authId, RequestRecordsDTO requestRecordsDTO) {
-        return fetchSingleRecord(authId, requestRecordsDTO, recordService::getNextRecord);
+        return fetchSingleRecord(authId, requestRecordsDTO, recordService.getNextRecord());
     }
 
     @Transactional
@@ -291,22 +291,22 @@ public class YClientsAPIService {
     }
 
     private CommonAPIResponse<List<Record>> fetchRecords(Long authId, RequestRecordsDTO requestRecordsDTO,
-                                                         java.util.function.Function<Long, List<Record>> recordFetcher) {
+                                                         List<Record> records) {
         return getAuth(authId).map(auth -> {
-            if (recordService.wasUpdatedLessThan15minAgo(requestRecordsDTO.getClientId())) {
-                return new CommonAPIResponse<>("success", recordFetcher.apply(requestRecordsDTO.getClientId()), "Успешное получение записей клиента");
+            if (recordService.wasUpdatedLessThan15minAgo()) {
+                return new CommonAPIResponse<>("success", records, "Успешное получение записей клиента");
             }
-            return fetchAndUpdateRecords(auth, requestRecordsDTO, recordFetcher);
+            return fetchAndUpdateRecords(auth, requestRecordsDTO, records);
         }).orElseGet(() -> new CommonAPIResponse<>("error", null, "Авторизация не найдена"));
     }
 
     private CommonAPIResponse<Record> fetchSingleRecord(Long authId, RequestRecordsDTO requestRecordsDTO,
-                                                        java.util.function.Function<Long, Record> recordFetcher) {
+                                                        Record record) {
         return getAuth(authId).map(auth -> {
-            if (recordService.wasUpdatedLessThan15minAgo(requestRecordsDTO.getClientId())) {
-                return new CommonAPIResponse<>("success", recordFetcher.apply(requestRecordsDTO.getClientId()), "Успешное получение записей клиента");
+            if (recordService.wasUpdatedLessThan15minAgo()) {
+                return new CommonAPIResponse<>("success", record, "Успешное получение записей клиента");
             }
-            return fetchAndUpdateSingleRecord(auth, requestRecordsDTO, recordFetcher);
+            return fetchAndUpdateSingleRecord(auth, requestRecordsDTO, record);
         }).orElseGet(() -> new CommonAPIResponse<>("error", null, "Авторизация не найдена"));
     }
 
@@ -315,7 +315,7 @@ public class YClientsAPIService {
     }
 
     private CommonAPIResponse<List<Record>> fetchAndUpdateRecords(Auth auth, RequestRecordsDTO requestRecordsDTO,
-                                                                  java.util.function.Function<Long, List<Record>> recordFetcher) {
+                                                                  List<Record> records) {
         ResponseDTO<List<RecordDTO>> responseDTO = apiClient.getRecords(auth.getCompanyId(), requestRecordsDTO, auth.getUserToken());
         if (!responseDTO.isSuccess()) {
             return new CommonAPIResponse<>("error", null, "Ошибка при получении записей клиента");
@@ -324,11 +324,11 @@ public class YClientsAPIService {
             return new CommonAPIResponse<>("success", null, "Отсутствуют данные записей для клиента с id: " + requestRecordsDTO.getClientId());
         }
         responseDTO.getData().forEach(recordService::createOrUpdateRecordFromDTO);
-        return new CommonAPIResponse<>("success", recordFetcher.apply(requestRecordsDTO.getClientId()), "Успешное получение записей клиента");
+        return new CommonAPIResponse<>("success", records, "Успешное получение записей клиента");
     }
 
     private CommonAPIResponse<Record> fetchAndUpdateSingleRecord(Auth auth, RequestRecordsDTO requestRecordsDTO,
-                                                                 java.util.function.Function<Long, Record> recordFetcher) {
+                                                                 Record record) {
         ResponseDTO<List<RecordDTO>> responseDTO = apiClient.getRecords(auth.getCompanyId(), requestRecordsDTO, auth.getUserToken());
         if (!responseDTO.isSuccess()) {
             return new CommonAPIResponse<>("error", null, "Ошибка при получении записей клиента");
@@ -337,7 +337,7 @@ public class YClientsAPIService {
             return new CommonAPIResponse<>("success", null, "Отсутствуют данные записей для клиента с id: " + requestRecordsDTO.getClientId());
         }
         responseDTO.getData().forEach(recordService::createOrUpdateRecordFromDTO);
-        return new CommonAPIResponse<>("success", recordFetcher.apply(requestRecordsDTO.getClientId()), "Успешное получение записей клиента");
+        return new CommonAPIResponse<>("success", record, "Успешное получение записей клиента");
     }
 
 }
