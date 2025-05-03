@@ -55,7 +55,7 @@ public class RecordRepositoryTest extends SpringBootApplicationTest {
     void testFindByClient_IdAndDatetimeAfterAndDatetimeBefore() {
         Instant start = Instant.parse("2025-04-05T09:00:00Z");
         Instant end = Instant.parse("2025-04-06T12:00:00Z");
-        List<Record> records = recordRepository.findByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBefore(3001L, start, end);
+        List<Record> records = recordRepository.findByDatetimeAfterAndDatetimeBefore(start, end);
         assertFalse(records.isEmpty());
     }
 
@@ -63,7 +63,7 @@ public class RecordRepositoryTest extends SpringBootApplicationTest {
     @DisplayName("Поиск первой записи клиента после указанной даты")
     void testFindFirstByClient_IdAndDatetimeAfterOrderByDatetimeAsc() {
         Instant after = Instant.parse("2025-04-05T09:00:00Z");
-        Optional<Record> record = recordRepository.findFirstByClient_ClientExternalIdAndDatetimeAfterOrderByDatetimeAsc(3001L, after);
+        Optional<Record> record = recordRepository.findFirstByDatetimeAfterOrderByDatetimeAsc(after);
         assertTrue(record.isPresent());
     }
 
@@ -75,7 +75,7 @@ public class RecordRepositoryTest extends SpringBootApplicationTest {
 
         Instant updatedAfter = Instant.parse("2025-04-04T16:00:00Z");
 
-        List<Record> records = recordRepository.findByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBefore(3001L, start, end);
+        List<Record> records = recordRepository.findByDatetimeAfterAndDatetimeBefore(start, end);
 
         assertFalse(records.isEmpty(), "Записи в заданном диапазоне времени не найдены");
 
@@ -90,7 +90,7 @@ public class RecordRepositoryTest extends SpringBootApplicationTest {
     @DisplayName("Поиск записей по ID клиента и дате обновления")
     void testFindByClient_IdAndUpdatedAfter() {
         Instant past = Instant.parse("2025-04-04T15:00:00Z");
-        List<Record> records = recordRepository.findByClient_ClientExternalIdAndUpdatedAfter(3001L, past);
+        List<Record> records = recordRepository.findFirstByUpdatedAfter(past);
         assertFalse(records.isEmpty(), "Записи после указанной даты обновления не найдены");
     }
 
@@ -98,7 +98,7 @@ public class RecordRepositoryTest extends SpringBootApplicationTest {
     @DisplayName("Поиск записей с неверной датой обновления")
     void testFindByClient_IdAndUpdatedAfterWithInvalidDate() {
         Instant futureDate = Instant.parse("2025-04-10T15:30:00Z");
-        List<Record> records = recordRepository.findByClient_ClientExternalIdAndUpdatedAfter(3001L, futureDate);
+        List<Record> records = recordRepository.findFirstByUpdatedAfter(futureDate);
         assertTrue(records.isEmpty(), "Записей не должно быть найдено после будущей даты");
     }
 
@@ -107,16 +107,9 @@ public class RecordRepositoryTest extends SpringBootApplicationTest {
     void testFindFirstByClient_IdAndDatetimeAfterAndDatetimeBeforeOrderByDatetimeAsc() {
         Instant start = Instant.parse("2025-04-05T09:00:00Z");
         Instant end = Instant.parse("2025-04-06T12:00:00Z");
-        Optional<Record> record = recordRepository.findFirstByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBeforeOrderByDatetimeAsc(3001L, start, end);
+        Optional<Record> record = recordRepository.findFirstByDatetimeAfterAndDatetimeBeforeOrderByDatetimeAsc(start, end);
         assertTrue(record.isPresent(), "Первая запись клиента должна быть найдена");
         assertEquals(5001L, record.get().getRecordExternalId(), "ID первой записи клиента должен быть 5001");
-    }
-
-    @Test
-    @DisplayName("Поиск записей для несуществующего клиента")
-    void testFindByClient_IdForNonExistentClient() {
-        List<Record> records = recordRepository.findByClient_ClientExternalId(9999L);
-        assertTrue(records.isEmpty(), "Для несуществующего клиента не должно быть записей");
     }
 
     @Test
@@ -124,7 +117,7 @@ public class RecordRepositoryTest extends SpringBootApplicationTest {
     void testFindByClient_IdAndDatetimeAfterAndDatetimeBeforeWithInvalidTimeRange() {
         Instant start = Instant.parse("2025-04-06T12:00:00Z");
         Instant end = Instant.parse("2025-04-05T09:00:00Z");
-        List<Record> records = recordRepository.findByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBefore(3001L, start, end);
+        List<Record> records = recordRepository.findByDatetimeAfterAndDatetimeBefore(start, end);
         assertTrue(records.isEmpty(), "Записей не должно быть найдено при неверном диапазоне времени");
     }
 
@@ -132,7 +125,7 @@ public class RecordRepositoryTest extends SpringBootApplicationTest {
     @DisplayName("Поиск первой записи для клиента, если не найдено подходящих записей")
     void testFindFirstByClient_IdAndDatetimeAfterOrderByDatetimeAscForNonExistentRecord() {
         Instant after = Instant.parse("2025-04-07T09:00:00Z");
-        Optional<Record> record = recordRepository.findFirstByClient_ClientExternalIdAndDatetimeAfterOrderByDatetimeAsc(3001L, after);
+        Optional<Record> record = recordRepository.findFirstByDatetimeAfterOrderByDatetimeAsc(after);
         assertFalse(record.isPresent(), "Запись не должна быть найдена для клиента в этом интервале времени");
     }
 

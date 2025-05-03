@@ -30,22 +30,22 @@ class RecordServiceTest extends SpringBootApplicationTest {
     @Test
     @DisplayName("Получение всех записей клиента")
     void testGetAllRecordsForClient() {
-        List<Record> records = recordService.getAllRecordsForClient(3001L);
+        List<Record> records = recordService.getAllRecords();
         assertFalse(records.isEmpty());
-        assertEquals(1, records.size());
+        assertEquals(2, records.size());
     }
 
     @Test
     @DisplayName("Получение записей клиента на ближайший час")
     void testGetRecordsForNextHour() {
-        List<Record> records = recordService.getRecordsForNextHour(3001L);
+        List<Record> records = recordService.getRecordsForNextHour();
         assertNotNull(records);
     }
 
     @Test
     @DisplayName("Получение текущей записи клиента")
     void testGetCurrentRecord() {
-        Record record = recordService.getCurrentRecord(3001L);
+        Record record = recordService.getCurrentRecord();
         assertNull(record);
     }
 
@@ -70,7 +70,7 @@ class RecordServiceTest extends SpringBootApplicationTest {
 
         recordService.createOrUpdateRecordFromDTO(dto);
 
-        Record record = recordService.getNextRecord(3001L);
+        Record record = recordService.getNextRecord();
         assertNotNull(record);
         assertEquals(3001L, record.getClient().getClientExternalId());
     }
@@ -96,14 +96,14 @@ class RecordServiceTest extends SpringBootApplicationTest {
 
         recordService.createOrUpdateRecordFromDTO(dto);
 
-        List<Record> records = recordService.getRecordsForToday(3001L);
+        List<Record> records = recordService.getRecordsForToday();
         assertFalse(records.isEmpty());
     }
 
     @Test
     @DisplayName("Проверка обновления записи менее 15 минут назад")
     void testWasUpdatedLessThan15minAgo() {
-        Boolean updated = recordService.wasUpdatedLessThan15minAgo(3001L);
+        Boolean updated = recordService.wasUpdatedLessThan15minAgo();
         assertFalse(updated);
     }
 
