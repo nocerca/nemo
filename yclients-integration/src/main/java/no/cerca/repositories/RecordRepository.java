@@ -14,9 +14,9 @@ import java.util.Optional;
 @Repository
 public interface RecordRepository extends JpaRepository<Record, Long> {
     Optional<Record> findByRecordExternalId(Long recordExternalId);
-    List<Record> findByClient_ClientExternalId(Long clientExternalId);
-    List<Record> findByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBefore(Long clientExternalId, Instant start, Instant end);
-    List<Record> findByClient_ClientExternalIdAndUpdatedAfter(Long clientExternalId, Instant dateBefore);
-    Optional<Record> findFirstByClient_ClientExternalIdAndDatetimeAfterOrderByDatetimeAsc(Long clientExternalId, Instant now);
-    Optional<Record> findFirstByClient_ClientExternalIdAndDatetimeAfterAndDatetimeBeforeOrderByDatetimeAsc(Long clientExternalId, Instant start, Instant end);
+    List<Record> findByDatetimeAfterAndDatetimeBefore(Instant start, Instant end);
+    List<Record> findFirstByUpdatedAfter(Instant dateBefore);
+    List<Record> findByUpdatedAfter(Instant updated);
+    Optional<Record> findFirstByDatetimeAfterOrderByDatetimeAsc(Instant now);
+    Optional<Record> findFirstByDatetimeAfterAndDatetimeBeforeOrderByDatetimeAsc(Instant start, Instant end);
 }
