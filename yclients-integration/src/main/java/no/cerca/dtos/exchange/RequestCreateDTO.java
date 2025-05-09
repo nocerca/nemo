@@ -8,6 +8,7 @@ import no.cerca.dtos.basic.ServiceDTO;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by jadae on 13.03.2025
@@ -167,5 +168,17 @@ public class RequestCreateDTO {
 
     public void setCustomFields(Map<String, Object> customFields) {
         this.customFields = customFields;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RequestCreateDTO that)) return false;
+        return isSaveIfBusy() == that.isSaveIfBusy() && isSendSms() == that.isSendSms() && Objects.equals(getStaffId(), that.getStaffId()) && Objects.equals(getClient(), that.getClient()) && Objects.equals(getDatetime(), that.getDatetime()) && Objects.equals(getSeanceLength(), that.getSeanceLength()) && Objects.equals(getComment(), that.getComment()) && Objects.equals(getSmsRemainHours(), that.getSmsRemainHours()) && Objects.equals(getEmailRemainHours(), that.getEmailRemainHours()) && Objects.equals(getAttendance(), that.getAttendance()) && Objects.equals(getApiId(), that.getApiId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getStaffId(), getClient(), isSaveIfBusy(), getDatetime(), getSeanceLength(), isSendSms(), getComment(), getSmsRemainHours(), getEmailRemainHours(), getAttendance(), getApiId());
     }
 }

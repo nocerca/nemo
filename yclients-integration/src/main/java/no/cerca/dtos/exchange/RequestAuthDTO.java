@@ -3,6 +3,8 @@ package no.cerca.dtos.exchange;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Objects;
+
 /**
  * Created by jadae on 13.03.2025
  */
@@ -47,5 +49,17 @@ public class RequestAuthDTO {
 
     public void setPartnerToken(String partnerToken) {
         this.partnerToken = partnerToken;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RequestAuthDTO that)) return false;
+        return Objects.equals(getLogin(), that.getLogin()) && Objects.equals(getPassword(), that.getPassword()) && Objects.equals(getPartnerToken(), that.getPartnerToken());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getLogin(), getPassword(), getPartnerToken());
     }
 }
