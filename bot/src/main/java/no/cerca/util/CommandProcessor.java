@@ -367,14 +367,15 @@ public class CommandProcessor {
         if (!checkAuth(chat.getChatId(), session)) return;
 
         try {
-            String[] parts = arguments.split(" ", 3);
-            if (parts.length < 3) {
-                sendMessage(chat.getChatId(), "Формат: /updaterecord [id_записи] [дата_время] [комментарий]");
+            String[] parts = arguments.split(" ", 4);
+            if (parts.length < 4) {
+                sendMessage(chat.getChatId(), "Формат: /updaterecord [id] [дата время] [комментарий]");
                 return;
             }
 
+            String dateText = parts[1] + " " + parts[2];
             Long recordId = Long.parseLong(parts[0]);
-            LocalDateTime newDateTime = LocalDateTime.parse(parts[1],
+            LocalDateTime newDateTime = LocalDateTime.parse(dateText,
                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
             RequestUpdateDTO updateDTO = new RequestUpdateDTO();
