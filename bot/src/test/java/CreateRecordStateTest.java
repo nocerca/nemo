@@ -246,7 +246,6 @@ class CreateRecordStateTest {
 
     private Auth createTestAuth() {
         AuthDTO authDTO = new AuthDTO(
-                1L,
                 "user_token_123",
                 "Test User",
                 "+79998887766",
