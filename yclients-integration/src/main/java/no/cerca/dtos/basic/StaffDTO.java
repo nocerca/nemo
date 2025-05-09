@@ -1,12 +1,10 @@
 package no.cerca.dtos.basic;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
 
 /**
  * Created by jadae on 13.03.2025
  */
-@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StaffDTO {
     private Long id;
