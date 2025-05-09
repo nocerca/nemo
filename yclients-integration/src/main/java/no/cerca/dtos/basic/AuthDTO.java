@@ -23,8 +23,7 @@ public class AuthDTO {
     public AuthDTO() {
     }
 
-    public AuthDTO(Long id, String userToken, String name, String phone, String login, String email, String avatar, boolean isApproved, String companyId, String partnerToken) {
-        this.id = id;
+    public AuthDTO(String userToken, String name, String phone, String login, String email, String avatar, boolean isApproved, String companyId, String partnerToken) {
         this.userToken = userToken;
         this.name = name;
         this.phone = phone;
