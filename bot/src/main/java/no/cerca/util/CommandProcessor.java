@@ -197,8 +197,8 @@ public class CommandProcessor {
             Matcher matcher = Pattern.compile(
                     "^(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}) " + // datetime
                             "(\\d+) " + // staffId
-                            "([\\w\\sа-яА-Я]+) " + // serviceName
-                            "([\\w\\sа-яА-Я]+ [\\w\\sа-яА-Я]+ [\\w\\sа-яА-Я]+ \\+?\\d{10,11}(?: [\\w.-]+@[\\w.-]+\\.\\w+)?) " + // clientData (Фамилия Имя Отчество Телефон Email)
+                            "([\\w\\sа-яА-ЯёЁ]+) " + // serviceName
+                            "([\\w\\sа-яА-ЯёЁ]+ [\\w\\sа-яА-ЯёЁ]+ [\\w\\sа-яА-ЯёЁ]+ \\+?\\d{10,11}(?: [\\w.-]+@[\\w.-]+\\.\\w+)?) " + // clientData (Фамилия Имя Отчество Телефон Email)
                             "(\\d+)" + // duration
                             "(?: (\\d+))?" + // smsRemainHours (optional)
                             "(?: (\\d+))?" + // emailRemainHours (optional)
