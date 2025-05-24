@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/jadae/IdeaProjects/nemo/bot/src/main/java</OriginalElement>
+  <nodes>
+    <node x="382.9166666666668" y="306.0">no.cerca.VkTeamsBotApplication</node>
+    <node x="147.1249999999999" y="306.0">no.cerca.configuration.BotConfiguration</node>
+    <node x="178.0" y="33.33333333333333">no.cerca.state.impl.AuthState</node>
+    <node x="-153.91666666666666" y="-14.0">no.cerca.exception.CustomBotException</node>
+    <node x="470.91666666666674" y="172.0">no.cerca.util.UserSession</node>
+    <node x="160.79166666666657" y="172.0">no.cerca.util.BotEventHandler</node>
+    <node x="-246.58333333333334" y="172.0">no.cerca.util.CommandProcessor</node>
+    <node x="178.0" y="80.66666666666666">no.cerca.state.impl.CreateRecordState</node>
+    <node x="178.0" y="-14.0">no.cerca.state.BotState</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="no.cerca.configuration.BotConfiguration" target="no.cerca.util.CommandProcessor" relationship="CREATE">
+      <point x="-91.5" y="0.0" />
+      <point x="-158.08333333333334" y="320.0" />
+      <point x="-15.0" y="14.0" />
+    </edge>
+    <edge source="no.cerca.configuration.BotConfiguration" target="no.cerca.util.BotEventHandler" relationship="CREATE">
+      <point x="12.666666666666686" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="no.cerca.state.impl.CreateRecordState" target="no.cerca.state.BotState" relationship="REALIZATION">
+      <point x="97.5" y="3.3333333334439885E-4" />
+      <point x="533.417" y="94.667" />
+      <point x="533.417" y="0.0" />
+      <point x="58.5" y="0.0" />
+    </edge>
+    <edge source="no.cerca.util.CommandProcessor" target="no.cerca.state.impl.CreateRecordState" relationship="CREATE">
+      <point x="20.75000000000003" y="-14.0" />
+      <point x="-122.33333333333331" y="141.16666666666666" />
+      <point x="275.5" y="141.16666666666666" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="no.cerca.state.impl.CreateRecordState" target="no.cerca.exception.CustomBotException" relationship="CREATE">
+      <point x="-97.5" y="0.0" />
+      <point x="-46.91666666666666" y="94.66666666666666" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="no.cerca.state.impl.AuthState" target="no.cerca.state.BotState" relationship="REALIZATION">
+      <point x="63.0" y="-3.33333333330188E-4" />
+      <point x="417.66666666666663" y="47.333" />
+      <point x="417.66666666666663" y="0.0" />
+      <point x="58.5" y="0.0" />
+    </edge>
+    <edge source="no.cerca.util.BotEventHandler" target="no.cerca.util.CommandProcessor" relationship="TO_ONE">
+      <point x="-90.5" y="0.0" />
+      <point x="103.5" y="0.0" />
+    </edge>
+    <edge source="no.cerca.util.UserSession" target="no.cerca.state.BotState" relationship="TO_ONE">
+      <point x="40.249999999999886" y="-11.0" />
+      <point x="584.6666666666666" y="107.00000000000003" />
+      <point x="585.0833333333334" y="107.00000000000003" />
+      <point x="585.0833333333334" y="-38.833333333333336" />
+      <point x="236.5" y="-38.833333333333336" />
+      <point x="0.0" y="-14.0" />
+    </edge>
+    <edge source="no.cerca.util.CommandProcessor" target="no.cerca.state.impl.AuthState" relationship="CREATE">
+      <point x="5.750000000000028" y="-14.0" />
+      <point x="-137.33333333333331" y="47.33333333333333" />
+      <point x="-63.0" y="0.0" />
+    </edge>
+    <edge source="no.cerca.util.BotEventHandler" target="no.cerca.util.UserSession" relationship="TO_MANY">
+      <point x="90.5" y="0.0" />
+      <point x="544.4166666666667" y="186.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="no.cerca.util.BotEventHandler" target="no.cerca.util.UserSession" relationship="CREATE">
+      <point x="15.0" y="14.0" />
+      <point x="266.2916666666666" y="232.5" />
+      <point x="559.4166666666667" y="232.5" />
+      <point x="15.0" y="14.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.5" showDependencies="true" x="147.0" y="194.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
