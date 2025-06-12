@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Diagram>
   <ID>JAVA</ID>
-  <OriginalElement>C:/Users/jadae/IdeaProjects/nemo/yclients-integration/src/main/java</OriginalElement>
+  <OriginalElement />
   <nodes>
-    <node x="1404.2136644219977" y="146.17003367003377">no.cerca.api.service.YClientsAPIService</node>
-    <node x="1013.2136644219977" y="765.363846801347">no.cerca.config.RestTemplateConfiguration</node>
-    <node x="2013.3555274971945" y="418.693041526375">no.cerca.repositories.CompanyRepository</node>
-    <node x="581.615909090909" y="622.7453108866442">no.cerca.dtos.exchange.RequestAuthDTO</node>
+    <node x="581.615909090909" y="887.592578843996">no.cerca.api.exception.common.ForbiddenException</node>
+    <node x="1013.2136644219977" y="146.17003367003377">no.cerca.api.client.YClientsAPIClient</node>
+    <node x="546.615909090909" y="374.2248843995511">no.cerca.dtos.exchange.RequestUpdateDTO</node>
+    <node x="1608.0445286195288" y="418.693041526375">no.cerca.repositories.StaffRepository</node>
+    <node x="1801.2000280583616" y="418.693041526375">no.cerca.repositories.ServiceRepository</node>
+    <node x="581.615909090909" y="717.1464845679013">no.cerca.dtos.exchange.ResponseDTO</node>
+    <node x="1559.814393939395" y="765.363846801347">no.cerca.config.LiquibaseConfiguration</node>
+    <node x="2043.4151234567917" y="765.363846801347">no.cerca.MainApplication</node>
+    <node x="799.7337542087541" y="99.22637485970822">no.cerca.dtos.basic.RecordDTO</node>
+    <node x="581.615909090909" y="654.0885746352412">no.cerca.dtos.exchange.RequestRecordsDTO</node>
+    <node x="1242.5513468013469" y="510.5092031425364">no.cerca.entities.Client</node>
+    <node x="581.615909090909" y="824.7479166666666">no.cerca.api.exception.custom.DeleteRecordException</node>
     <node x="1397.889029180696" y="418.693041526375">no.cerca.repositories.RecordRepository</node>
+    <node x="577.615909090909" y="167.19721156004488">no.cerca.dtos.basic.StaffDTO</node>
+    <node x="1439.389029180696" y="510.5092031425364">no.cerca.entities.Record</node>
+    <node x="1206.7722502805836" y="418.693041526375">no.cerca.repositories.ClientRepository</node>
+    <node x="581.615909090909" y="919.0149099326607">no.cerca.api.exception.common.UnauthorizedException</node>
+    <node x="581.615909090909" y="507.6130415263748">no.cerca.dtos.exchange.RequestCreateDTO</node>
+    <node x="1842.7000280583616" y="510.5092031425364">no.cerca.entities.Service</node>
+    <node x="2013.3555274971945" y="418.693041526375">no.cerca.repositories.CompanyRepository</node>
+    <node x="581.615909090909" y="856.1702477553313">no.cerca.api.exception.common.YClientsApiException</node>
+    <node x="1013.2136644219977" y="765.363846801347">no.cerca.config.RestTemplateConfiguration</node>
+    <node x="799.7337542087541" y="167.19721156004488">no.cerca.dtos.basic.AuthDTO</node>
+    <node x="1013.2136644219977" y="282.4315375982044">no.cerca.services.AuthService</node>
+    <node x="577.615909090909" y="207.9626610549943">no.cerca.dtos.basic.ServiceDTO</node>
+    <node x="1013.2136644219977" y="418.693041526375">no.cerca.repositories.AuthRepository</node>
+    <node x="2054.855527497195" y="510.5092031425364">no.cerca.entities.Company</node>
+    <node x="1404.2136644219977" y="146.17003367003377">no.cerca.api.service.YClientsAPIService</node>
+    <node x="1294.5140291806963" y="765.363846801347">no.cerca.config.DataSourceConfiguration</node>
+    <node x="577.615909090909" y="126.43176206509543">no.cerca.dtos.basic.ClientDTO</node>
+    <node x="1054.7136644219977" y="510.5092031425364">no.cerca.entities.Auth</node>
+    <node x="581.615909090909" y="622.7453108866442">no.cerca.dtos.exchange.RequestAuthDTO</node>
+    <node x="581.5190695847361" y="538.4063344556678">no.cerca.dtos.exchange.RequestMessageDTO</node>
+    <node x="1643.0445286195288" y="282.4315375982044">no.cerca.services.RecordService</node>
     <node x="1809.1147586980935" y="765.363846801347">no.cerca.config.MapperConfiguration</node>
     <node x="1649.5445286195288" y="510.5092031425364">no.cerca.entities.Staff</node>
-    <node x="1643.0445286195288" y="282.4315375982044">no.cerca.services.RecordService</node>
-    <node x="2054.855527497195" y="510.5092031425364">no.cerca.entities.Company</node>
-    <node x="581.615909090909" y="654.0885746352412">no.cerca.dtos.exchange.RequestRecordsDTO</node>
-    <node x="1411.7136644219977" y="282.4315375982044">no.cerca.services.ClientService</node>
-    <node x="2043.4151234567917" y="765.363846801347">no.cerca.MainApplication</node>
-    <node x="1294.5140291806963" y="765.363846801347">no.cerca.config.DataSourceConfiguration</node>
-    <node x="1054.7136644219977" y="510.5092031425364">no.cerca.entities.Auth</node>
-    <node x="1559.814393939395" y="765.363846801347">no.cerca.config.LiquibaseConfiguration</node>
-    <node x="577.615909090909" y="167.19721156004488">no.cerca.dtos.basic.StaffDTO</node>
-    <node x="581.615909090909" y="824.7479166666666">no.cerca.api.exception.custom.DeleteRecordException</node>
-    <node x="1801.2000280583616" y="418.693041526375">no.cerca.repositories.ServiceRepository</node>
-    <node x="577.615909090909" y="126.43176206509543">no.cerca.dtos.basic.ClientDTO</node>
-    <node x="577.615909090909" y="207.9626610549943">no.cerca.dtos.basic.ServiceDTO</node>
-    <node x="1013.2136644219977" y="146.17003367003377">no.cerca.api.client.YClientsAPIClient</node>
-    <node x="799.7337542087541" y="99.22637485970822">no.cerca.dtos.basic.RecordDTO</node>
-    <node x="581.615909090909" y="856.1702477553313">no.cerca.api.exception.common.YClientsApiException</node>
-    <node x="581.615909090909" y="717.1464845679013">no.cerca.dtos.exchange.ResponseDTO</node>
-    <node x="1206.7722502805836" y="418.693041526375">no.cerca.repositories.ClientRepository</node>
-    <node x="1013.2136644219977" y="418.693041526375">no.cerca.repositories.AuthRepository</node>
-    <node x="1608.0445286195288" y="418.693041526375">no.cerca.repositories.StaffRepository</node>
-    <node x="1242.5513468013469" y="510.5092031425364">no.cerca.entities.Client</node>
-    <node x="799.7337542087541" y="167.19721156004488">no.cerca.dtos.basic.AuthDTO</node>
-    <node x="581.615909090909" y="887.592578843996">no.cerca.api.exception.common.ForbiddenException</node>
-    <node x="1842.7000280583616" y="510.5092031425364">no.cerca.entities.Service</node>
-    <node x="581.615909090909" y="507.6130415263748">no.cerca.dtos.exchange.RequestCreateDTO</node>
-    <node x="546.615909090909" y="374.2248843995511">no.cerca.dtos.exchange.RequestUpdateDTO</node>
-    <node x="581.615909090909" y="919.0149099326607">no.cerca.api.exception.common.UnauthorizedException</node>
-    <node x="1439.389029180696" y="510.5092031425364">no.cerca.entities.Record</node>
     <node x="581.615909090909" y="685.6175296015713">no.cerca.api.response.CommonAPIResponse</node>
-    <node x="1013.2136644219977" y="282.4315375982044">no.cerca.services.AuthService</node>
-    <node x="581.5190695847361" y="538.4063344556678">no.cerca.dtos.exchange.RequestMessageDTO</node>
+    <node x="1411.7136644219977" y="282.4315375982044">no.cerca.services.ClientService</node>
   </nodes>
   <notes />
   <edges>
@@ -48,12 +48,12 @@
       <point x="-98.0" y="0.0" />
       <point x="92.5" y="0.0" />
     </edge>
-    <edge source="no.cerca.dtos.basic.RecordDTO" target="no.cerca.dtos.basic.ServiceDTO" relationship="TO_MANY">
-      <point x="2.457912459021827E-4" y="-13.999762065095425" />
-      <point x="868.734" y="76.05882379349048" />
-      <point x="733.3050224466889" y="76.05882379349048" />
-      <point x="733.3050224466889" y="221.96217732884395" />
-      <point x="70.000090909091" y="-4.837261503496393E-4" />
+    <edge source="no.cerca.api.client.YClientsAPIClient" target="no.cerca.api.exception.common.YClientsApiException" relationship="CREATE">
+      <point x="0.0" y="-14.0" />
+      <point x="1105.7136644219977" y="-26.602837261503936" />
+      <point x="2288.8555274971945" y="-26.602837261503936" />
+      <point x="2288.8555274971945" y="870.2479166666666" />
+      <point x="108.5" y="0.07766891133530862" />
     </edge>
     <edge source="no.cerca.dtos.exchange.RequestCreateDTO" target="no.cerca.dtos.basic.ServiceDTO" relationship="TO_MANY">
       <point x="-98.499909090909" y="-4.152637472998322E-5" />
@@ -65,17 +65,17 @@
       <point x="685.6531986531986" y="234.23120089786755" />
       <point x="41.43796296296307" y="12.268539842873253" />
     </edge>
-    <edge source="no.cerca.api.client.YClientsAPIClient" target="no.cerca.api.exception.common.YClientsApiException" relationship="CREATE">
-      <point x="0.0" y="-14.0" />
-      <point x="1105.7136644219977" y="-26.602837261503936" />
-      <point x="2288.8555274971945" y="-26.602837261503936" />
-      <point x="2288.8555274971945" y="870.2479166666666" />
-      <point x="108.5" y="0.07766891133530862" />
+    <edge source="no.cerca.dtos.basic.RecordDTO" target="no.cerca.dtos.basic.ServiceDTO" relationship="TO_MANY">
+      <point x="2.457912459021827E-4" y="-13.999762065095425" />
+      <point x="868.734" y="76.05882379349048" />
+      <point x="733.3050224466889" y="76.05882379349048" />
+      <point x="733.3050224466889" y="221.96217732884395" />
+      <point x="70.000090909091" y="-4.837261503496393E-4" />
     </edge>
     <edge source="no.cerca.services.RecordService" target="no.cerca.repositories.CompanyRepository" relationship="TO_ONE">
       <point x="0.0" y="-14.0" />
-      <point x="1723.0445286195288" y="239.85948372615036" />
-      <point x="2116.8555274971945" y="239.85948372615036" />
+      <point x="1723.0445286195288" y="252.04749719416384" />
+      <point x="2116.8555274971945" y="252.04749719416384" />
       <point x="0.0" y="-14.0" />
     </edge>
     <edge source="no.cerca.services.RecordService" target="no.cerca.entities.Service" relationship="CREATE">
@@ -92,17 +92,17 @@
       <point x="560.0" y="870.17" />
       <point x="-108.499909090909" y="-2.4775533131560223E-4" />
     </edge>
+    <edge source="no.cerca.api.service.YClientsAPIService" target="no.cerca.services.RecordService" relationship="TO_ONE">
+      <point x="78.0" y="14.0" />
+      <point x="1580.2136644219977" y="296.4315375982044" />
+      <point x="-80.0" y="0.0" />
+    </edge>
     <edge source="no.cerca.api.service.YClientsAPIService" target="no.cerca.dtos.exchange.RequestCreateDTO" relationship="CREATE">
       <point x="-45.0" y="14.0" />
       <point x="1457.2136644219977" y="208.35948372615036" />
       <point x="829.0190695847361" y="208.35948372615036" />
       <point x="829.0190695847361" y="520.906" />
       <point x="98.5" y="-0.7070415263748373" />
-    </edge>
-    <edge source="no.cerca.api.service.YClientsAPIService" target="no.cerca.services.RecordService" relationship="TO_ONE">
-      <point x="78.0" y="14.0" />
-      <point x="1580.2136644219977" y="296.4315375982044" />
-      <point x="-80.0" y="0.0" />
     </edge>
     <edge source="no.cerca.api.client.YClientsAPIClient" target="no.cerca.api.exception.common.ForbiddenException" relationship="CREATE">
       <point x="-92.5" y="-2.7744107744108817" />
@@ -111,8 +111,8 @@
       <point x="103.0" y="0.0" />
     </edge>
     <edge source="no.cerca.api.service.YClientsAPIService" target="no.cerca.api.response.CommonAPIResponse" relationship="CREATE">
-      <point x="45.0" y="-14.0" />
-      <point x="1547.2136644219977" y="-11.602837261503936" />
+      <point x="42.57439393939467" y="-10.104579124579288" />
+      <point x="1544.7880583613924" y="-11.602837261503936" />
       <point x="500.0" y="-11.602837261503936" />
       <point x="500.0" y="699.6175296015713" />
       <point x="-127.5" y="0.0" />
@@ -164,13 +164,13 @@
     </edge>
     <edge source="no.cerca.services.RecordService" target="no.cerca.repositories.RecordRepository" relationship="TO_ONE">
       <point x="15.000471380471254" y="14.0" />
-      <point x="1738.045" y="395.0" />
-      <point x="1487.214" y="395.0" />
+      <point x="1738.045" y="401.5292929292929" />
+      <point x="1487.214" y="401.5292929292929" />
       <point x="-4.175029180696129" y="-14.0" />
     </edge>
     <edge source="no.cerca.api.service.YClientsAPIService" target="no.cerca.dtos.exchange.RequestUpdateDTO" relationship="CREATE">
-      <point x="-15.0" y="-14.0" />
-      <point x="1487.2136644219977" y="-71.60283726150394" />
+      <point x="-63.635437710437145" y="-13.586868686868854" />
+      <point x="1438.5782267115605" y="-71.60283726150394" />
       <point x="470.0" y="-71.60283726150394" />
       <point x="470.0" y="388.2248843995511" />
       <point x="-101.0" y="0.0" />
@@ -183,11 +183,15 @@
       <point x="0.0" y="-14.0" />
     </edge>
     <edge source="no.cerca.api.service.YClientsAPIService" target="no.cerca.dtos.exchange.RequestMessageDTO" relationship="CREATE">
-      <point x="0.0" y="-14.0" />
-      <point x="1502.2136644219977" y="-56.602837261503936" />
+      <point x="-11.981475869808492" y="-13.586868686868854" />
+      <point x="1490.2321885521892" y="-56.602837261503936" />
       <point x="485.0" y="-56.602837261503936" />
       <point x="485.0" y="552.4063344556678" />
       <point x="-107.5" y="0.0" />
+    </edge>
+    <edge source="no.cerca.services.AuthService" target="no.cerca.repositories.AuthRepository" relationship="TO_ONE">
+      <point x="13.5" y="14.0" />
+      <point x="0.0" y="-14.0" />
     </edge>
     <edge source="no.cerca.dtos.exchange.RequestUpdateDTO" target="no.cerca.dtos.basic.ServiceDTO" relationship="TO_MANY">
       <point x="9.09090909999577E-5" y="-13.999884399551092" />
@@ -195,10 +199,6 @@
       <point x="542.9595959595958" y="265.93082940516274" />
       <point x="542.9595959595958" y="221.76206509539844" />
       <point x="-69.65070145903474" y="-0.20059595959585863" />
-    </edge>
-    <edge source="no.cerca.services.AuthService" target="no.cerca.repositories.AuthRepository" relationship="TO_ONE">
-      <point x="13.5" y="14.0" />
-      <point x="0.0" y="-14.0" />
     </edge>
     <edge source="no.cerca.api.exception.common.UnauthorizedException" target="no.cerca.api.exception.common.YClientsApiException" relationship="GENERALIZATION">
       <point x="-115.499909090909" y="9.00673393289253E-5" />
@@ -213,18 +213,6 @@
       <point x="1491.389029180696" y="464.193041526375" />
       <point x="0.0" y="-14.0" />
     </edge>
-    <edge source="no.cerca.entities.Record" target="no.cerca.entities.Service" relationship="TO_MANY">
-      <point x="0.0" y="14.0" />
-      <point x="1491.389029180696" y="606.028444163861" />
-      <point x="1880.7000280583616" y="606.028444163861" />
-      <point x="-15.0" y="14.0" />
-    </edge>
-    <edge source="no.cerca.services.RecordService" target="no.cerca.repositories.ClientRepository" relationship="TO_ONE">
-      <point x="4.7138047125372395E-4" y="14.00046240179563" />
-      <point x="1723.045" y="365.0" />
-      <point x="1295.772" y="365.0" />
-      <point x="-2.5028058371390216E-4" y="-14.000041526375014" />
-    </edge>
     <edge source="no.cerca.services.RecordService" target="no.cerca.entities.Staff" relationship="CREATE">
       <point x="-15.0" y="-14.0" />
       <point x="1708.0445286195288" y="208.35899999999998" />
@@ -232,6 +220,18 @@
       <point x="2333.8555274971945" y="736.2448933782266" />
       <point x="1693.0445286195288" y="736.2448933782266" />
       <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="no.cerca.services.RecordService" target="no.cerca.repositories.ClientRepository" relationship="TO_ONE">
+      <point x="4.7138047125372395E-4" y="14.00046240179563" />
+      <point x="1723.045" y="365.0" />
+      <point x="1295.772" y="365.0" />
+      <point x="-2.5028058371390216E-4" y="-14.000041526375014" />
+    </edge>
+    <edge source="no.cerca.entities.Record" target="no.cerca.entities.Service" relationship="TO_MANY">
+      <point x="0.0" y="14.0" />
+      <point x="1491.389029180696" y="606.028444163861" />
+      <point x="1880.7000280583616" y="606.028444163861" />
+      <point x="-15.0" y="14.0" />
     </edge>
     <edge source="no.cerca.api.service.YClientsAPIService" target="no.cerca.services.ClientService" relationship="TO_ONE">
       <point x="-15.0" y="14.0" />
@@ -289,7 +289,7 @@
       <point x="-60.5" y="0.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic" zoom="0.8821782178217822" showDependencies="true" x="1427.0" y="448.66778900112234" />
+  <settings layout="Hierarchic" zoom="2.7060646754993245" showDependencies="true" x="1474.6610870946681" y="423.2701283482046" />
   <SelectedNodes />
   <Categories />
   <SCOPE>All</SCOPE>
