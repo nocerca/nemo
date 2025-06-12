@@ -105,7 +105,7 @@ public class CommandProcessor {
     private void handleAuthCommand(Chat chat, String arguments, UserSession session) {
         String[] credentials = arguments.split(" ");
         if (credentials.length != 3) {
-            sendMessage(chat.getChatId(), "Неверный формат. Требуется: /auth логин пароль партнерский_токен");
+            sendMessage(chat.getChatId(), "Неверный формат. Требуется: /auth логин пароль токен");
             return;
         }
 
